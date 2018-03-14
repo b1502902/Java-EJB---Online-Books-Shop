@@ -164,6 +164,6 @@ public class ProductsManagedBean {
     
     public String productdetail(Products p){
         this.productID = p.getProductID();
-        return "product_details.xhtml";
+        return "faces/product_details.xhtml";
     }
 }
