@@ -34,6 +34,9 @@ public class ProductsManagedBean {
     private String productTrailer;
     private String productContent;
 
+    
+    private Products p;
+
     public ProductsManagedBean() {
     }
 
@@ -147,7 +150,13 @@ public class ProductsManagedBean {
     public void setProductContent(String productContent) {
         this.productContent = productContent;
     }
-    
+    public Products getP() {
+        return p;
+    }
+
+    public void setP(Products p) {
+        this.p = p;
+    }
 
     /**
      * Creates a new instance of ProductsManagedBean
@@ -163,7 +172,12 @@ public class ProductsManagedBean {
     }
     
     public String productdetail(Products p){
-        this.productID = p.getProductID();
+        setProductID(p.getProductID());
+        this.p = p;
         return "faces/product_details.xhtml";
+    }
+    
+    public Products showProduct(){
+        return productsFacade.find(productID);
     }
 }

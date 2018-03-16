@@ -10,27 +10,31 @@
         <ui:composition template="./templates/guest/indexTemplate.xhtml">
             <ui:define name="content">
                 <h:form>
-			<h4>Latest Products </h4>
-                        <c:set var="count" value="0"/>
-			  <ul class="thumbnails">
-                              <c:forEach items="#{productsManagedBean.showProductsIndex()}" var="p">
-				<li class="span3">
-				  <div class="thumbnail">
-                                      <a  href="#{productsManagedBean.productdetail(p)}"><img src="#{p.productImg}" alt=""/></a>
-					<div class="caption">
-					  <h5>Product name</h5>
-					  <p> 
-						#{p.productName}
-					  </p>
-					  <h4 style="text-align:center"><a class="btn" href="#{productsManagedBean.productdetail(p)}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
-                                          
-                                        </div>
-				  </div>
-				</li>
-                                </c:forEach>
-                          </ul>
-                        
-                    </h:form>
+                    <h4>Latest Products </h4>
+                    <c:set var="count" value="0"/>
+                    <ul class="thumbnails">
+                        <c:forEach items="#{productsManagedBean.showProductsIndex()}" var="p">
+                            <li class="span3">
+                                <div class="thumbnail">
+                                    <h:commandLink action="#{productsManagedBean.productdetail(p)}">
+                                        <h:graphicImage value="#{p.productImg}"/>
+                                    </h:commandLink>
+
+                                    <div class="caption">
+                                        <h5>Product name</h5>
+                                        <p> 
+                                            #{p.productName}
+                                        </p>
+
+                                        <h4 style="text-align:center"><a class="btn" href="#{productsManagedBean.productdetail(p)}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
+
+                                    </div>
+                                </div>
+                            </li>
+                        </c:forEach>
+                    </ul>
+
+                </h:form>
             </ui:define>
         </ui:composition>
 

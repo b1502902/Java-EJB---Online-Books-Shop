@@ -3,37 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/ProductsFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/SysdiagramsFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/entitypack/ProductArtist.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/FeedbacksFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/ProducersFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/UsersFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/AbstractFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/AlbumsFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/ProductArtistFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/CategoriesFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/OrdersFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/ArtistsFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/ProductArtistFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/OrdersDetailFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/entitypack/Advertises.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/OrdersDetailFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/ProducersFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/AlbumProductFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/AdvertisesFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/CommentsFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/ArtistsFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/SysdiagramsFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/OrdersFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/AdvertisesFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/AlbumsFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/ProductsFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/UsersFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/CategoriesFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/CommentsFacadeLocal.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/AlbumProductFacade.java</file>
-            <file>file:/C:/Users/salin_000/Desktop/PJSem4/PJSem4-ejb/src/java/sbeanpack/FeedbacksFacadeLocal.java</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-ejb/src/java/sbeanpack/ProducersFacade.java</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-ejb/src/java/entitypack/Products.java</file>
         </group>
     </open-files>
 </project-private>
