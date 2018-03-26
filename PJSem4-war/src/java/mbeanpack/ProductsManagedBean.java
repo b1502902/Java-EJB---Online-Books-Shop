@@ -5,11 +5,16 @@
  */
 package mbeanpack;
 
+import entitypack.Categories;
 import entitypack.Products;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import sbeanpack.CategoriesFacadeLocal;
 import sbeanpack.ProductsFacadeLocal;
 
 /**
@@ -19,6 +24,8 @@ import sbeanpack.ProductsFacadeLocal;
 @ManagedBean
 @RequestScoped
 public class ProductsManagedBean {
+    @EJB
+    private CategoriesFacadeLocal categoriesFacade;
     
     @EJB
     private ProductsFacadeLocal productsFacade;
@@ -33,8 +40,7 @@ public class ProductsManagedBean {
     private String productImg;
     private String productTrailer;
     private String productContent;
-
-    
+    private String skeyword;
     private Products p;
 
     public ProductsManagedBean() {
@@ -158,6 +164,13 @@ public class ProductsManagedBean {
         this.p = p;
     }
 
+    public String getSkeyword() {
+        return skeyword;
+    }
+
+    public void setSkeyword(String skeyword) {
+        this.skeyword = skeyword;
+    }
     /**
      * Creates a new instance of ProductsManagedBean
      */
@@ -167,6 +180,16 @@ public class ProductsManagedBean {
         return productsFacade.findAll();
     }
     
+    public List<Products> showProductByCate(String cateid){
+        List<Products> listProducts = productsFacade.findAll();
+        if(!"".equals(cateid)){
+            Categories cate = categoriesFacade.find(new Integer(cateid));
+            listProducts = productsFacade.showByCate(cate);
+        }
+        System.out.println("so luong phan tu: "+listProducts.size());
+        return listProducts;
+    }
+    
     public List<Products> showProductsIndex(){
         return productsFacade.findAll().subList(0, 9);
     }
@@ -174,10 +197,35 @@ public class ProductsManagedBean {
     public String productdetail(Products p){
         setProductID(p.getProductID());
         this.p = p;
-        return "faces/product_details.xhtml";
+        return "product_details.xhtml";
+    }
+    
+    public List<Products> showOnePdetail(int pid){
+        Products p = new Products();
+        p = productsFacade.find(pid);
+        List<Products> plist = new ArrayList<>();
+        plist.add(p);
+        return plist;
+    }
+    
+    public String actionSearchProducts(){
+        return "search1.xhtml";
+    }
+    
+    public List<Products> showSearchProducts(){
+        List<Products> plist = new ArrayList<Products>();
+        plist = productsFacade.searchProducts(skeyword);
+        return plist;
     }
     
     public Products showProduct(){
         return productsFacade.find(productID);
+    }
+    
+    public String subName(String name){
+        if(name.length() > 25){
+            name = name.substring(0, 25)+"...";
+        }
+        return name;
     }
 }

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./templates/guest/indexTemplate.xhtml">
+
+
+            <ui:define name="carouselBlk">
+
+            </ui:define>
+
+
+            <ui:define name="content">
+                
+                <p:dataGrid var="p" value="#{productsManagedBean.showSearchProducts()}" columns="3"
+                                rows="12" paginator="true" id="product">
+                    <h:form id="form">
+                        <f:facet name="header">
+                            List of products
+                        </f:facet>
+
+                        
+                        <h:panelGrid columns="1" width="100%">
+                            <h:outputLink value="product_details.xhtml?pid=#{p.productID}">
+                                <h:graphicImage value="#{p.productImg}" width="200"/>
+                            </h:outputLink>
+                                
+                            <h:outputLink value="product_details.xhtml?pid=#{p.productID}">
+                                <h:outputText value="#{productsManagedBean.subName(p.productName)}" />
+                            </h:outputLink>
+                            
+                            <h:outputText value="#{p.productPrice}" />
+                            
+                                <input type="hidden" name="itemID" value="#{p.productID}"/>
+                                <h:commandButton type="submit" value="Add to cart" action="#{shoppingCartManagedBean.addItemToCart(1)}" class="btn btn-small btn-primary pull-left"/>
+                            
+                        </h:panelGrid>
+                        
+                    </h:form>
+                    </p:dataGrid>
+                
+            </ui:define>
+
+
+
+        </ui:composition>
+
+    </body>
+</html>

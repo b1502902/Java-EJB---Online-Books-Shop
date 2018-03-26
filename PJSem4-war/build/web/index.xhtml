@@ -16,15 +16,14 @@
                         <c:forEach items="#{productsManagedBean.showProductsIndex()}" var="p">
                             <li class="span3">
                                 <div class="thumbnail">
-                                    <h:commandLink action="#{productsManagedBean.productdetail(p)}">
+                                    <h:outputLink value="product_details.xhtml?pid=#{p.productID}">
                                         <h:graphicImage value="#{p.productImg}"/>
-                                    </h:commandLink>
+                                    </h:outputLink>
 
                                     <div class="caption">
-                                        <h5>Product name</h5>
-                                        <p> 
+                                        <h5> 
                                             #{p.productName}
-                                        </p>
+                                        </h5>
 
                                         <h4 style="text-align:center"><a class="btn" href="#{productsManagedBean.productdetail(p)}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
 

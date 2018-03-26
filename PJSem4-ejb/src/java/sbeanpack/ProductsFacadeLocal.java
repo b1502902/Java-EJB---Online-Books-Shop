@@ -6,6 +6,7 @@
 
 package sbeanpack;
 
+import entitypack.Categories;
 import entitypack.Products;
 import java.util.List;
 import javax.ejb.Local;
@@ -31,4 +32,8 @@ public interface ProductsFacadeLocal {
 
     int count();
     
+    List<Products> showByCate();
+    List<Products> showByCate(Categories cateID);
+
+    public List<Products> searchProducts(String keyword);
 }
