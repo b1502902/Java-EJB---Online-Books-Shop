@@ -9,6 +9,7 @@ package sbeanpack;
 import entitypack.Users;
 import java.util.List;
 import javax.ejb.Local;
+import javax.persistence.metamodel.SingularAttribute;
 
 /**
  *
@@ -30,5 +31,10 @@ public interface UsersFacadeLocal {
     List<Users> findRange(int[] range);
 
     int count();
+
+    public boolean checkLogin(String username, String password);
+
+    public int findIdByUsername(String username);
+
     
 }

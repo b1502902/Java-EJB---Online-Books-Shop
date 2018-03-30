@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entitypack;
 
 import java.io.Serializable;
@@ -11,8 +10,6 @@ import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,15 +27,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "OrdersDetail")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "OrdersDetail.findAll", query = "SELECT o FROM OrdersDetail o"),
-    @NamedQuery(name = "OrdersDetail.findByOrdersDetailID", query = "SELECT o FROM OrdersDetail o WHERE o.ordersDetailID = :ordersDetailID"),
-    @NamedQuery(name = "OrdersDetail.findByQuantity", query = "SELECT o FROM OrdersDetail o WHERE o.quantity = :quantity"),
-    @NamedQuery(name = "OrdersDetail.findByPrice", query = "SELECT o FROM OrdersDetail o WHERE o.price = :price")})
+    @NamedQuery(name = "OrdersDetail.findAll", query = "SELECT o FROM OrdersDetail o")
+    , @NamedQuery(name = "OrdersDetail.findByOrdersDetailID", query = "SELECT o FROM OrdersDetail o WHERE o.ordersDetailID = :ordersDetailID")
+    , @NamedQuery(name = "OrdersDetail.findByQuantity", query = "SELECT o FROM OrdersDetail o WHERE o.quantity = :quantity")
+    , @NamedQuery(name = "OrdersDetail.findByPrice", query = "SELECT o FROM OrdersDetail o WHERE o.price = :price")})
 public class OrdersDetail implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "OrdersDetailID")
     private Integer ordersDetailID;
     @Basic(optional = false)

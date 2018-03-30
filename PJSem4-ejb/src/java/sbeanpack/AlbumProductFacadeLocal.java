@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sbeanpack;
 
 import entitypack.AlbumProduct;
+import entitypack.Albums;
+import entitypack.Products;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,5 +31,12 @@ public interface AlbumProductFacadeLocal {
     List<AlbumProduct> findRange(int[] range);
 
     int count();
+
+    /**
+     *
+     * @param alb
+     * @return
+     */
+    public List<Products> listProductsByAlbum(Albums alb);
     
 }

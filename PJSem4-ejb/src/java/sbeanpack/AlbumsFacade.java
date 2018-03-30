@@ -6,10 +6,14 @@
 
 package sbeanpack;
 
+import entitypack.AlbumProduct;
 import entitypack.Albums;
+import entitypack.Users;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +33,11 @@ public class AlbumsFacade extends AbstractFacade<Albums> implements AlbumsFacade
         super(Albums.class);
     }
     
+    
+    @Override
+    public List<Albums> showAllAlbumsOfUser(Users user){
+        Query query = em.createQuery("SELECT a FROM Albums a WHERE a.userID = :userid",Albums.class);
+        query.setParameter("userid", user);
+        return query.getResultList();
+    }
 }

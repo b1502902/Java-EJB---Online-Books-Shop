@@ -21,5 +21,10 @@
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
-    
+    <ejb-local-ref>
+        <ejb-ref-name>UsersFacade</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>sbeanpack.UsersFacadeLocal</local>
+        <ejb-link>PJSem4-ejb.jar#UsersFacade</ejb-link>
+    </ejb-local-ref>
 </web-app>

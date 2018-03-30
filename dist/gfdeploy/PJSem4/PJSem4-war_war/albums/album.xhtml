@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../templates/guest/indexTemplate.xhtml">
+
+
+            <ui:define name="carouselBlk">
+            </ui:define>
+
+            <ui:define name="content">
+                <p:dataTable var="p" value="#{albumsManagedBean.showProductsInAlbum(param['albid'])}" >
+                    
+                        <p:column styleClass="col-md-9" headerText="Product Name">
+                        <h:outputLink value="../product_details.xhtml?pid=#{p.productID}">
+                            <h:outputText value="#{p.productName}" />
+                        </h:outputLink>
+                    </p:column>
+
+                    <p:column styleClass="col-md-3" headerText="Product Price">
+                        <h:outputText value="$#{p.productPrice}" />
+                    </p:column>
+                    
+                </p:dataTable>
+            </ui:define>
+
+            
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -7,6 +7,7 @@
 package sbeanpack;
 
 import entitypack.Comments;
+import entitypack.Products;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,5 +31,8 @@ public interface CommentsFacadeLocal {
     List<Comments> findRange(int[] range);
 
     int count();
+
+
+    public List<Comments> listCmtByProductID(Products productID);
     
 }

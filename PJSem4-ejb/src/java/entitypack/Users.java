@@ -42,6 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Users.findByUserPhone", query = "SELECT u FROM Users u WHERE u.userPhone = :userPhone"),
     @NamedQuery(name = "Users.findByUserAddress", query = "SELECT u FROM Users u WHERE u.userAddress = :userAddress")})
 public class Users implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
+    private Collection<Albums> albumsCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -191,6 +194,15 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "entitypack.Users[ userID=" + userID + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Albums> getAlbumsCollection() {
+        return albumsCollection;
+    }
+
+    public void setAlbumsCollection(Collection<Albums> albumsCollection) {
+        this.albumsCollection = albumsCollection;
     }
     
 }

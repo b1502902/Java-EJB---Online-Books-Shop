@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/github1/PJSem4/PJSem4-ejb/src/java/sbeanpack/ProducersFacade.java</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-ejb/src/java/entitypack/Products.java</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-ejb/src/java/sbeanpack/CommentsFacadeLocal.java</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-ejb/src/java/sbeanpack/CommentsFacade.java</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-ejb/src/java/entitypack/Orders.java</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-ejb/src/java/sbeanpack/UsersFacade.java</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-ejb/src/java/sbeanpack/OrdersDetailFacade.java</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-ejb/src/java/entitypack/Comments.java</file>
         </group>
     </open-files>
 </project-private>

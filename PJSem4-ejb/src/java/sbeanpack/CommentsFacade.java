@@ -7,9 +7,12 @@
 package sbeanpack;
 
 import entitypack.Comments;
+import entitypack.Products;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +32,10 @@ public class CommentsFacade extends AbstractFacade<Comments> implements Comments
         super(Comments.class);
     }
     
+    @Override
+    public List<Comments> listCmtByProductID(Products productID){
+        Query query = em.createQuery("SELECT c FROM Comments c WHERE c.productID = :productID ORDER BY c.cmtID DESC",Comments.class);
+        query.setParameter("productID", productID);
+        return query.getResultList();
+    } 
 }

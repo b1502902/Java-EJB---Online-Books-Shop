@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./templates/guest/indexTemplate.xhtml">
+
+           
+            <ui:define name="carouselBlk">
+            </ui:define>
+
+            
+
+            <ui:define name="content">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="username" value="Username"/>
+                        <h:inputText id="username" value="#{userManagerBean.username}" required="true" requiredMessage="Username can not be empty!">
+                            <f:validateLength minimum="3" maximum="16"/>
+                        </h:inputText><br/>
+                        <h:message for="username" style="color: red"  />
+
+                        <h:outputLabel for="password" value="Password"/>
+                        <h:inputSecret id="password" value="#{userManagerBean.password}" required="true" requiredMessage="Password can not be empty!">
+                            <f:validateLength minimum="6" maximum="16"/>
+                        </h:inputSecret><br/>
+                        <h:message for="password" style="color: red" />
+
+                        <h:outputLabel for="realname" value="Real Name"/>
+                        <h:inputText id="realname" value="#{userManagerBean.realname}"/>
+
+                        <h:outputLabel for="email" value="Email"/>
+                        <h:inputText id="useemailrname" value="#{userManagerBean.email}" required="true" requiredMessage="Email can not be empty!">
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                        </h:inputText><br/>
+                        <h:message for="email" style="color: red"/>
+
+                        <h:outputLabel for="phone" value="Phone"/>
+                        <h:inputText id="phone" value="#{userManagerBean.phone}"/>
+
+                        <h:outputLabel for="address" value="Address"/>
+                        <h:inputText id="address" value="#{userManagerBean.address}"/>
+
+                        <h:commandButton value="Register" type="submit" action="#{userManagerBean.registerUser()}"/>
+                        <h:commandButton value="Reset" type="reset" />
+
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+
+            
+        </ui:composition>
+
+    </body>
+</html>

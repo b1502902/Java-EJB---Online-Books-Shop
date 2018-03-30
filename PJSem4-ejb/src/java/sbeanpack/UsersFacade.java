@@ -6,10 +6,15 @@
 
 package sbeanpack;
 
+import entitypack.Products;
 import entitypack.Users;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.SingularAttribute;
 
 /**
  *
@@ -28,5 +33,27 @@ public class UsersFacade extends AbstractFacade<Users> implements UsersFacadeLoc
     public UsersFacade() {
         super(Users.class);
     }
+
+    @Override
+    public boolean checkLogin(String username, String password) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        javax.persistence.criteria.CriteriaQuery cq = cb.createQuery();
+        Root c = cq.from(Users.class);
+        cq.select(c);
+        cq.where(cb.equal(c.get("username"), username),
+                cb.equal(c.get("password"), password)
+              );
+        Query q = getEntityManager().createQuery(cq);
+        return q.getResultList().size() > 0;
+    }
+    
+    @Override
+    public int findIdByUsername(String username){
+        Query query = em.createQuery("SELECT u.userID FROM Users u WHERE u.username = :username",Users.class);
+        query.setParameter("username", username);
+        System.out.println(query.getResultList());
+        return (int) query.getSingleResult();
+    }
+
     
 }

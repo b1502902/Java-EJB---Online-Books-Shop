@@ -7,6 +7,8 @@
 package entitypack;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Comments.findAll", query = "SELECT c FROM Comments c"),
     @NamedQuery(name = "Comments.findByCmtID", query = "SELECT c FROM Comments c WHERE c.cmtID = :cmtID"),
-    @NamedQuery(name = "Comments.findByCmtContent", query = "SELECT c FROM Comments c WHERE c.cmtContent = :cmtContent")})
+    @NamedQuery(name = "Comments.findByCmtContent", query = "SELECT c FROM Comments c WHERE c.cmtContent = :cmtContent"),
+    @NamedQuery(name = "Comments.findByCmtDate", query = "SELECT c FROM Comments c WHERE c.cmtDate = :cmtDate")})
 public class Comments implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,6 +50,11 @@ public class Comments implements Serializable {
     @Size(min = 1, max = 2000)
     @Column(name = "CmtContent")
     private String cmtContent;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CmtDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date cmtDate;
     @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
     @ManyToOne(optional = false)
     private Products productID;
@@ -59,9 +69,26 @@ public class Comments implements Serializable {
         this.cmtID = cmtID;
     }
 
-    public Comments(Integer cmtID, String cmtContent) {
+    public Comments(Integer cmtID, String cmtContent, Date cmtDate, Products productID, Users userID) {
         this.cmtID = cmtID;
         this.cmtContent = cmtContent;
+        this.cmtDate = cmtDate;
+        this.productID = productID;
+        this.userID = userID;
+    }
+
+    public Comments(String cmtContent, Date cmtDate, Products productID, Users userID) {
+        this.cmtContent = cmtContent;
+        this.cmtDate = cmtDate;
+        this.productID = productID;
+        this.userID = userID;
+    }
+
+    
+    public Comments(Integer cmtID, String cmtContent, Date cmtDate) {
+        this.cmtID = cmtID;
+        this.cmtContent = cmtContent;
+        this.cmtDate = cmtDate;
     }
 
     public Integer getCmtID() {
@@ -78,6 +105,14 @@ public class Comments implements Serializable {
 
     public void setCmtContent(String cmtContent) {
         this.cmtContent = cmtContent;
+    }
+
+    public Date getCmtDate() {
+        return cmtDate;
+    }
+
+    public void setCmtDate(Date cmtDate) {
+        this.cmtDate = cmtDate;
     }
 
     public Products getProductID() {

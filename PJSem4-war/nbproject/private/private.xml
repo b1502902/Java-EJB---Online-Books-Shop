@@ -3,16 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/src/java/mbeanpack/ShoppingCartManagedBean.java</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/web/admin/index.xhtml</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-war/src/java/mbeanpack/UsersManagedBean.java</file>
             <file>file:/E:/github1/PJSem4/PJSem4-war/web/product_details.xhtml</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/web/index.xhtml</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/web/resources/themes/less/amelia/bootswatch.less</file>
             <file>file:/E:/github1/PJSem4/PJSem4-war/web/templates/guest/topTemplate.xhtml</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/web/templates/admin/contentTemplate.xhtml</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/src/java/mbeanpack/ProductsManagedBean.java</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/web/templates/admin/adindexTemplate.xhtml</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/web/templates/guest/indexTemplate.xhtml</file>
         </group>
     </open-files>
 </project-private>

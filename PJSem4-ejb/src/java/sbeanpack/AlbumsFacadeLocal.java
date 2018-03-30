@@ -7,6 +7,7 @@
 package sbeanpack;
 
 import entitypack.Albums;
+import entitypack.Users;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,5 +31,7 @@ public interface AlbumsFacadeLocal {
     List<Albums> findRange(int[] range);
 
     int count();
+
+    public List<Albums> showAllAlbumsOfUser(Users user);
     
 }
