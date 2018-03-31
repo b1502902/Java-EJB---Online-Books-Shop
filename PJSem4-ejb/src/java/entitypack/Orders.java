@@ -70,12 +70,12 @@ public class Orders implements Serializable {
     private String orderNote;
     @JoinColumn(name = "UserID", referencedColumnName = "UserID")
     @ManyToOne(optional = false)
-    private Users_1 userID;
+    private Users userID;
 
     public Orders() {
     }
 
-    public Orders(Date orderDate, String orrderName, String orderStatus, String orderPhone, String orderAddress, String orderNote, Users_1 userID) {
+    public Orders(Date orderDate, String orrderName, String orderStatus, String orderPhone, String orderAddress, String orderNote, Users userID) {
         this.orderDate = orderDate;
         this.orrderName = orrderName;
         this.orderStatus = orderStatus;
@@ -84,6 +84,8 @@ public class Orders implements Serializable {
         this.orderNote = orderNote;
         this.userID = userID;
     }
+    
+    
 
     public Orders(Integer orderID) {
         this.orderID = orderID;
@@ -150,11 +152,11 @@ public class Orders implements Serializable {
         this.orderNote = orderNote;
     }
 
-    public Users_1 getUserID() {
+    public Users getUserID() {
         return userID;
     }
 
-    public void setUserID(Users_1 userID) {
+    public void setUserID(Users userID) {
         this.userID = userID;
     }
 

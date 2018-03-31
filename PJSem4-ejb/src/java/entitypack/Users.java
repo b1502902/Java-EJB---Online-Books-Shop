@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entitypack;
 
 import java.io.Serializable;
@@ -32,19 +31,17 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Users")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
-    @NamedQuery(name = "Users.findByUserID", query = "SELECT u FROM Users u WHERE u.userID = :userID"),
-    @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u WHERE u.username = :username"),
-    @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password"),
-    @NamedQuery(name = "Users.findByUserRule", query = "SELECT u FROM Users u WHERE u.userRule = :userRule"),
-    @NamedQuery(name = "Users.findByUserRealname", query = "SELECT u FROM Users u WHERE u.userRealname = :userRealname"),
-    @NamedQuery(name = "Users.findByUserEmail", query = "SELECT u FROM Users u WHERE u.userEmail = :userEmail"),
-    @NamedQuery(name = "Users.findByUserPhone", query = "SELECT u FROM Users u WHERE u.userPhone = :userPhone"),
-    @NamedQuery(name = "Users.findByUserAddress", query = "SELECT u FROM Users u WHERE u.userAddress = :userAddress")})
+    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")
+    , @NamedQuery(name = "Users.findByUserID", query = "SELECT u FROM Users u WHERE u.userID = :userID")
+    , @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u WHERE u.username = :username")
+    , @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")
+    , @NamedQuery(name = "Users.findByUserRule", query = "SELECT u FROM Users u WHERE u.userRule = :userRule")
+    , @NamedQuery(name = "Users.findByUserRealname", query = "SELECT u FROM Users u WHERE u.userRealname = :userRealname")
+    , @NamedQuery(name = "Users.findByUserEmail", query = "SELECT u FROM Users u WHERE u.userEmail = :userEmail")
+    , @NamedQuery(name = "Users.findByUserPhone", query = "SELECT u FROM Users u WHERE u.userPhone = :userPhone")
+    , @NamedQuery(name = "Users.findByUserAddress", query = "SELECT u FROM Users u WHERE u.userAddress = :userAddress")})
 public class Users implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
-    private Collection<Albums> albumsCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,7 +78,7 @@ public class Users implements Serializable {
     @Column(name = "UserAddress")
     private String userAddress;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
-    private Collection<Comments> commentsCollection;
+    private Collection<Orders> ordersCollection;
 
     public Users() {
     }
@@ -90,6 +87,19 @@ public class Users implements Serializable {
         this.userID = userID;
     }
 
+    public Users(String username, String password, String userRule, String userRealname, String userEmail, String userPhone, String userAddress, Collection<Orders> ordersCollection) {
+        this.username = username;
+        this.password = password;
+        this.userRule = userRule;
+        this.userRealname = userRealname;
+        this.userEmail = userEmail;
+        this.userPhone = userPhone;
+        this.userAddress = userAddress;
+        this.ordersCollection = ordersCollection;
+    }
+
+    
+    
     public Users(Integer userID, String username, String password, String userRule, String userEmail) {
         this.userID = userID;
         this.username = username;
@@ -163,12 +173,12 @@ public class Users implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Comments> getCommentsCollection() {
-        return commentsCollection;
+    public Collection<Orders> getOrdersCollection() {
+        return ordersCollection;
     }
 
-    public void setCommentsCollection(Collection<Comments> commentsCollection) {
-        this.commentsCollection = commentsCollection;
+    public void setOrdersCollection(Collection<Orders> ordersCollection) {
+        this.ordersCollection = ordersCollection;
     }
 
     @Override
@@ -194,15 +204,6 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "entitypack.Users[ userID=" + userID + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Albums> getAlbumsCollection() {
-        return albumsCollection;
-    }
-
-    public void setAlbumsCollection(Collection<Albums> albumsCollection) {
-        this.albumsCollection = albumsCollection;
     }
     
 }
