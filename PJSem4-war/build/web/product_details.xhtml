@@ -55,6 +55,23 @@
 
 
                                     </h:form>
+                                    <c:if test="${!empty session.getAttribute('username')}">
+                                    <br class="clr"/>
+                                    <h:form class="form-horizontal productToAlbumFrm">
+                                        <p:growl id="growl" life="3000" />
+                                        <input type="hidden" class="span1" name="itemID" value="#{p.productID}"/>
+
+                                        
+                                        <h:selectOneMenu id="lazy" value="#{albumsManagedBean.selectedAlbum}" style="width:125px">
+                                            <f:selectItem itemLabel="Select Album" itemValue="" />
+                                            <f:selectItems value="#{albumsManagedBean.showUserAlbumsToMenu()}"  />
+                                        </h:selectOneMenu>
+
+                                        <p:commandButton value="Add to Album" id="ajax" update="growl" actionListener="#{albumsManagedBean.addProductToAlbum()}" styleClass="ui-priority-primary" />
+
+
+                                    </h:form>
+                                    </c:if>
                                 </div>
 
 
@@ -98,10 +115,10 @@
                                             <p:commandButton value="Comment" id="ajax" update="growl" actionListener="#{commentsManagedbean.actionCmt()}" styleClass="ui-priority-primary" />
                                         </h:form>
                                         <h:form> 
-                                                <p:dataList value="#{commentsManagedbean.showCmtByProduct(p.productID)}" var="cmt" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
-                                                    <b><h:outputText value="#{cmt.userID.username}" style="display:inline-block"/></b> - <h:outputText value="#{cmt.cmtDate}" style="display:inline-block"/><br/>
-                                                    <i><h:outputText value="#{cmt.cmtContent}"/></i><br/><br/>
-                                                </p:dataList>
+                                            <p:dataList value="#{commentsManagedbean.showCmtByProduct(p.productID)}" var="cmt" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
+                                                <b><h:outputText value="#{cmt.userID.username}" style="display:inline-block"/></b> - <h:outputText value="#{cmt.cmtDate}" style="display:inline-block"/><br/>
+                                                <i><h:outputText value="#{cmt.cmtContent}"/></i><br/><br/>
+                                            </p:dataList>
                                         </h:form>
                                     </div>
                                     <div class="tab-pane fade" id="profile">

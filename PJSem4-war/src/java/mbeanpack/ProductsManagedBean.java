@@ -7,6 +7,7 @@ package mbeanpack;
 
 import entitypack.Categories;
 import entitypack.Products;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,8 @@ public class ProductsManagedBean {
     private int productID;
     private String productName;
     private int productQuantity;
-    private float productPrice;
+//    private float productPrice;
+    BigDecimal productPrice;
     private int cateID;
     private int artistsID;
     private int producerID;
@@ -46,7 +48,7 @@ public class ProductsManagedBean {
     public ProductsManagedBean() {
     }
 
-    public ProductsManagedBean(int productID, String productName, int productQuantity, float productPrice, int cateID, int artistsID, int producerID, String productImg, String productTrailer, String productContent) {
+    public ProductsManagedBean(int productID, String productName, int productQuantity, BigDecimal productPrice, int cateID, int artistsID, int producerID, String productImg, String productTrailer, String productContent) {
         this.productID = productID;
         this.productName = productName;
         this.productQuantity = productQuantity;
@@ -59,7 +61,7 @@ public class ProductsManagedBean {
         this.productContent = productContent;
     }
 
-    public ProductsManagedBean(String productName, int productQuantity, float productPrice, int cateID, int artistsID, int producerID, String productImg, String productTrailer, String productContent) {
+    public ProductsManagedBean(String productName, int productQuantity, BigDecimal productPrice, int cateID, int artistsID, int producerID, String productImg, String productTrailer, String productContent) {
         this.productName = productName;
         this.productQuantity = productQuantity;
         this.productPrice = productPrice;
@@ -101,11 +103,11 @@ public class ProductsManagedBean {
         this.productQuantity = productQuantity;
     }
 
-    public float getProductPrice() {
+    public BigDecimal getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(float productPrice) {
+    public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
     }
 

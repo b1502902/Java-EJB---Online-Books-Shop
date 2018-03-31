@@ -3,7 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
@@ -14,17 +17,43 @@
             </ui:define>
 
             <ui:define name="content">
-                <p:dataTable var="ci" value="#{shoppingCartManagedBean.showCart()}">
+
+                <h:form>
+                    <p:dataTable var="ci" value="#{shoppingCartManagedBean.showCart()}">
                     <p:column headerText="Product">
                         <h:outputText value="#{ci.itemName}" />
                     </p:column>
                     <p:column headerText="Quantity">
-                        <h:outputText value="#{ci.itemQuantity}" />
+                        <h:form>
+                            <p:growl id="growl" life="3000" />
+                            <input type="hidden" class="span1" name="itemID" value="#{ci.itemID}"/>
+                            <p:inputText type="number" value="#{ci.itemQuantity}" binding="#{quant}" styleClass="span1"/>
+                            <p:commandButton id="nonAjax" update="growl" actionListener="#{shoppingCartManagedBean.changeItemCartQuantity(quant.value)}" value="Update"/>
+                        </h:form>
                     </p:column>
-                    <p:column headerText="Price">
-                        <h:outputText value="#{ci.itemPrice}" />
+                    <p:column headerText="Price of 1">
+                        <h:outputText value="$#{ci.itemPrice}" />
                     </p:column>
+                    <c:if test="#{shoppingCartManagedBean.showCart() != null}">
+                        <p:column headerText="Total Price">
+                            <h:outputText value="#{shoppingCartManagedBean.totalPrice(ci.itemQuantity, ci.itemPrice)}"/>
+                        </p:column>
+                    </c:if>
+                    
                 </p:dataTable>
+                <c:if test="#{shoppingCartManagedBean.showCart() != null}">
+                    <h4 class="alignR">Total All: #{shoppingCartManagedBean.totalAllPrice()}</h4>
+                </c:if>
+
+                <p:accordionPanel>
+                    <p:tab title="Customer's Information">
+                        
+                    </p:tab>
+                </p:accordionPanel>
+                    <p:commandButton/>
+                </h:form>
+                
+                    
             </ui:define>
 
         </ui:composition>

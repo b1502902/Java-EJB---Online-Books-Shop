@@ -26,10 +26,14 @@
                             <strong>
                                 #{session.getAttribute('username')}
                             </strong>
+                            
                             <h:form>
-                                <p:growl id="growl" life="2000" />
+                                <p:growl id="growl" life="3000" />
+                                <h:outputLink id="albumUser" value="useralbums.xhtml" class="btn">
+                                    User's Albums
+                                </h:outputLink>
                                 <p:commandButton value="Edit Profile" id="editUser" actionListener="#" ajax="false" />
-                                <p:commandButton value="Log out" id="logoutUser" actionListener="#{usersManagedBean.logoutUser()}" ajax="false" />
+                                <h:commandButton value="Log out" id="logoutUser" action="#{usersManagedBean.logoutUser()}" class="btn btn-danger"/>
 
                             </h:form>
                         
@@ -100,7 +104,7 @@
                                                 <h:inputSecret id="inputPassword" value="#{usersManagedBean.password}"/>
                                             </div>
                                             <div class="control-group">
-                                                <p:commandButton value="Sign in" id="nonAjax" update="growl" ajax="false" actionListener="#{usersManagedBean.loginUser()}"/>
+                                                <p:commandButton value="Sign in" id="nonAjax" update="growl" ajax="false" action="#{usersManagedBean.loginUser()}"/>
                                                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                                             </div>
                                         </h:form>

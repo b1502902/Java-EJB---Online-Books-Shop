@@ -8,6 +8,7 @@ package mbeanpack;
 
 import entitypack.Products;
 import java.awt.event.ActionEvent;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -164,6 +165,32 @@ public class ShoppingCartManagedBean {
         addMessage("The product has been added to your cart!");
     }
     
+    public void changeItemCartQuantity(String quant){
+        String a = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("itemID");
+        int itemID = Integer.parseInt(a);
+        for (CartItem i : listitem) {
+            if(i.getItemID() == itemID){
+                i.setItemQuantity(Integer.parseInt(quant));
+                System.out.println(listitem.indexOf(i));
+                listitem.set(listitem.indexOf(i), i);
+                break;
+            }
+        }
+        
+        addMessage("Quantity has been updated!");
+    }
+    
+    public BigDecimal totalPrice(int quant, BigDecimal iprice){
+        
+        return iprice.multiply(new BigDecimal(quant));
+    }
+    public BigDecimal totalAllPrice(){
+        BigDecimal totalAll= BigDecimal.ZERO;   
+        for (CartItem i : listitem) {
+            totalAll = totalAll.add(totalPrice(i.getItemQuantity(), i.getItemPrice()));
+        }
+        return totalAll;
+    }
     
     public void testMethod(){
         System.out.println("đã nhận phương thức");

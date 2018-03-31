@@ -15,3 +15,9 @@ and open the template in the editor.
 .ui-datagrid-content, .ui-widget-content{
     border:0 !important
 }
+form {
+    margin: 0px;
+}
+input[type="number"]{
+    margin-bottom: 0px;
+}

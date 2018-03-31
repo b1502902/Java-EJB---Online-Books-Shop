@@ -144,7 +144,7 @@ public class UsersManagedBean {
         if(usersFacade.checkLogin(username, password)){
 //            hs.setAttribute("username", username);
             context.getExternalContext().getSessionMap().put("username", username);
-            return "index.xhtml?faces-redirect=true";
+            return "index.xhtml";//?faces-redirect=true
         } else{
             context.addMessage(null, new FacesMessage("Unknown login, try again"));
             return null;
@@ -158,6 +158,13 @@ public class UsersManagedBean {
         Map<String, Object> sessionMap = context.getExternalContext().getSessionMap();
         sessionMap.remove("username");
         return "index.xhtml";
+    }
+    
+    public Users getUserLogged(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        String username = (String) context.getExternalContext().getSessionMap().get("username");
+        Users u = usersFacade.find(usersFacade.findIdByUsername(username));
+        return u;
     }
     
 //    public String loginUser() {

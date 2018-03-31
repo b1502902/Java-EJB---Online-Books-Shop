@@ -7,7 +7,7 @@
 
     <body>
 
-        <ui:composition template="./../templates/guest/indexTemplate.xhtml">
+        <ui:composition template="./templates/guest/indexTemplate.xhtml">
 
 
 
@@ -24,7 +24,6 @@
                         <h:outputLink value="album.xhtml?albid=#{alb.albumID}">
                             <h:outputText value="#{alb.albumID}. #{alb.albumName}" />
                         </h:outputLink>
-                        
                     </p:column>
                 </p:dataTable>
             </ui:define>

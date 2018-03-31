@@ -10,7 +10,11 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -31,16 +35,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o")
     , @NamedQuery(name = "Orders.findByOrderID", query = "SELECT o FROM Orders o WHERE o.orderID = :orderID")
     , @NamedQuery(name = "Orders.findByOrderDate", query = "SELECT o FROM Orders o WHERE o.orderDate = :orderDate")
-    , @NamedQuery(name = "Orders.findByUserID", query = "SELECT o FROM Orders o WHERE o.userID = :userID")
+    , @NamedQuery(name = "Orders.findByOrrderName", query = "SELECT o FROM Orders o WHERE o.orrderName = :orrderName")
     , @NamedQuery(name = "Orders.findByOrderStatus", query = "SELECT o FROM Orders o WHERE o.orderStatus = :orderStatus")
     , @NamedQuery(name = "Orders.findByOrderPhone", query = "SELECT o FROM Orders o WHERE o.orderPhone = :orderPhone")
-    , @NamedQuery(name = "Orders.findByOrderAddress", query = "SELECT o FROM Orders o WHERE o.orderAddress = :orderAddress")})
+    , @NamedQuery(name = "Orders.findByOrderAddress", query = "SELECT o FROM Orders o WHERE o.orderAddress = :orderAddress")
+    , @NamedQuery(name = "Orders.findByOrderNote", query = "SELECT o FROM Orders o WHERE o.orderNote = :orderNote")})
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "OrderID")
     private Integer orderID;
     @Basic(optional = false)
@@ -48,10 +53,9 @@ public class Orders implements Serializable {
     @Column(name = "OrderDate")
     @Temporal(TemporalType.DATE)
     private Date orderDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "UserID")
-    private int userID;
+    @Size(max = 100)
+    @Column(name = "OrrderName")
+    private String orrderName;
     @Size(max = 10)
     @Column(name = "OrderStatus")
     private String orderStatus;
@@ -61,18 +65,33 @@ public class Orders implements Serializable {
     @Size(max = 2000)
     @Column(name = "OrderAddress")
     private String orderAddress;
+    @Size(max = 4000)
+    @Column(name = "OrderNote")
+    private String orderNote;
+    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
+    @ManyToOne(optional = false)
+    private Users_1 userID;
 
     public Orders() {
+    }
+
+    public Orders(Date orderDate, String orrderName, String orderStatus, String orderPhone, String orderAddress, String orderNote, Users_1 userID) {
+        this.orderDate = orderDate;
+        this.orrderName = orrderName;
+        this.orderStatus = orderStatus;
+        this.orderPhone = orderPhone;
+        this.orderAddress = orderAddress;
+        this.orderNote = orderNote;
+        this.userID = userID;
     }
 
     public Orders(Integer orderID) {
         this.orderID = orderID;
     }
 
-    public Orders(Integer orderID, Date orderDate, int userID) {
+    public Orders(Integer orderID, Date orderDate) {
         this.orderID = orderID;
         this.orderDate = orderDate;
-        this.userID = userID;
     }
 
     public Integer getOrderID() {
@@ -91,12 +110,12 @@ public class Orders implements Serializable {
         this.orderDate = orderDate;
     }
 
-    public int getUserID() {
-        return userID;
+    public String getOrrderName() {
+        return orrderName;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setOrrderName(String orrderName) {
+        this.orrderName = orrderName;
     }
 
     public String getOrderStatus() {
@@ -121,6 +140,22 @@ public class Orders implements Serializable {
 
     public void setOrderAddress(String orderAddress) {
         this.orderAddress = orderAddress;
+    }
+
+    public String getOrderNote() {
+        return orderNote;
+    }
+
+    public void setOrderNote(String orderNote) {
+        this.orderNote = orderNote;
+    }
+
+    public Users_1 getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Users_1 userID) {
+        this.userID = userID;
     }
 
     @Override

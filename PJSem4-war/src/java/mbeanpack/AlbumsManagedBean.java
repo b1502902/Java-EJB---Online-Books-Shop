@@ -6,15 +6,18 @@
 
 package mbeanpack;
 
+import entitypack.AlbumProduct;
 import entitypack.Albums;
 import entitypack.Products;
 import entitypack.Users;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import sbeanpack.AlbumProductFacadeLocal;
 import sbeanpack.AlbumsFacadeLocal;
 import sbeanpack.ProductsFacadeLocal;
@@ -45,6 +48,8 @@ public class AlbumsManagedBean {
     
     private int albumProductID;
     private int productID;
+    
+    private int selectedAlbum;
 
     public AlbumsManagedBean(int albumID, String albumName, int userID) {
         this.albumID = albumID;
@@ -111,5 +116,38 @@ public class AlbumsManagedBean {
         Albums alb = albumsFacade.find(albid);
         
         return albumProductFacade.listProductsByAlbum(alb);
+    }
+    
+    public List<SelectItem> showUserAlbumsToMenu(){
+        List<SelectItem> ls = new ArrayList<>();
+        FacesContext context = FacesContext.getCurrentInstance();
+        String username = (String) context.getExternalContext().getSessionMap().get("username");
+        Users u = usersFacade.find(usersFacade.findIdByUsername(username));
+        List<Albums> la = albumsFacade.showAllAlbumsOfUser(u);
+        for (Albums a : la) {
+            ls.add(new SelectItem(a.getAlbumID(), a.getAlbumName()));
+        }
+        return ls;
+    }
+    
+    public void addProductToAlbum(){
+        UsersManagedBean um = new UsersManagedBean();
+        //lay product
+        String a = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("itemID");
+        Products p = productsFacade.find(new Integer(a));
+        albumProductFacade.create(new AlbumProduct(albumsFacade.find(selectedAlbum), p));
+        addMessage("The product has been added to "+albumsFacade.find(selectedAlbum).getAlbumName());
+    }
+
+    public int getSelectedAlbum() {
+        return selectedAlbum;
+    }
+
+    public void setSelectedAlbum(int selectedAlbum) {
+        this.selectedAlbum = selectedAlbum;
+    }
+    public void addMessage(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

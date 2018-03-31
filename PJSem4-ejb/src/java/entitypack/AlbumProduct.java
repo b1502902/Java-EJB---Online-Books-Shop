@@ -48,6 +48,12 @@ public class AlbumProduct implements Serializable {
     public AlbumProduct() {
     }
 
+    public AlbumProduct(Albums albumID, Products productID) {
+        this.albumID = albumID;
+        this.productID = productID;
+    }
+
+    
     public AlbumProduct(Integer albumProductID) {
         this.albumProductID = albumProductID;
     }
