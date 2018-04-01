@@ -193,7 +193,7 @@ public class ProductsManagedBean {
     }
     
     public List<Products> showProductsIndex(){
-        return productsFacade.findAll().subList(0, 9);
+        return productsFacade.showLastedProducts().subList(0, 9);
     }
     
     public String productdetail(Products p){

@@ -53,4 +53,13 @@ public class ProductsFacade extends AbstractFacade<Products> implements Products
         List<Products> listProducts = query.getResultList();
         return listProducts;
     }
+    
+    @Override
+    public List<Products> showLastedProducts(){
+        Query query = em.createQuery("SELECT p FROM Products p ORDER BY p.productID DESC",Products.class);
+        
+        List<Products> listProducts = query.getResultList();
+        return listProducts;
+    }
+    
 }

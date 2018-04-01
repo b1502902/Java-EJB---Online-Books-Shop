@@ -33,10 +33,10 @@
                             </h:outputLink>
                                 
                             <h:outputLink value="product_details.xhtml?pid=#{p.productID}">
-                                <h:outputText value="#{productsManagedBean.subName(p.productName)}" />
+                                <b><h:outputText value="#{productsManagedBean.subName(p.productName)}" /></b>
                             </h:outputLink>
                             
-                            <h:outputText value="#{p.productPrice}" />
+                            <h:outputText value="$#{p.productPrice}"/>
                             
                                 <input type="hidden" name="itemID" value="#{p.productID}"/>
                                 <p:commandButton value="Add to cart" id="ajax" update="growl" actionListener="#{shoppingCartManagedBean.addItemToCart(1)}" styleClass="ui-priority-primary" />

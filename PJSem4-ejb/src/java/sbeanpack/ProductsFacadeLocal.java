@@ -36,4 +36,6 @@ public interface ProductsFacadeLocal {
     List<Products> showByCate(Categories cateID);
 
     public List<Products> searchProducts(String keyword);
+
+    public List<Products> showLastedProducts();
 }

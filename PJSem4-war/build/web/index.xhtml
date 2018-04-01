@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -21,12 +22,18 @@
                                     </h:outputLink>
 
                                     <div class="caption">
-                                        <h5> 
-                                            #{p.productName}
-                                        </h5>
-
-                                        <h4 style="text-align:center"><a class="btn" href="#{productsManagedBean.productdetail(p)}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
-
+                                        <h6>
+                                            <h:outputLink value="product_details.xhtml?pid=#{p.productID}">
+                                                #{p.productName}
+                                            </h:outputLink>
+                                        </h6>
+                                        <h:outputText value="$#{p.productPrice}"/><br/>
+                                        <h:form>
+                                            <p:growl id="growl" life="3000" />
+                                            <input type="hidden" name="itemID" value="#{p.productID}"/>
+                                            <p:commandButton value="Add to cart" id="ajax" update="growl" actionListener="#{shoppingCartManagedBean.addItemToCart(1)}" styleClass="ui-priority-primary" />
+                                        </h:form>
+                                        
                                     </div>
                                 </div>
                             </li>

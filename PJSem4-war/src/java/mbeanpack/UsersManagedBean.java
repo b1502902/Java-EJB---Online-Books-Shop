@@ -139,14 +139,16 @@ public class UsersManagedBean {
     }
     
     public String loginUser(){
-        FacesContext context = FacesContext.getCurrentInstance();
-//        HttpSession hs = SessionManaged.getSession();
+//        FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession hs = SessionManaged.getSession();
+        System.out.println(username+password);
         if(usersFacade.checkLogin(username, password)){
-//            hs.setAttribute("username", username);
-            context.getExternalContext().getSessionMap().put("username", username);
+            hs.setAttribute("username", username);
+            System.out.println("session"+hs.getAttribute("username"));
+//            context.getExternalContext().getSessionMap().put("username", username);
             return "index.xhtml";//?faces-redirect=true
         } else{
-            context.addMessage(null, new FacesMessage("Unknown login, try again"));
+            addMessage("Unknown login, try again");
             return null;
         }
     }
@@ -181,7 +183,7 @@ public class UsersManagedBean {
 //        return "index.xhtml";
 //    }
     
-    public String showSessionUser(){
+    public String showSessionUsername(){
         HttpSession session = SessionManaged.getSession();
         return (String) session.getAttribute(username);
     }

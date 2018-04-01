@@ -6,6 +6,7 @@
 
 package sbeanpack;
 
+import entitypack.Orders;
 import entitypack.OrdersDetail;
 import java.util.List;
 import javax.ejb.Local;
@@ -30,5 +31,7 @@ public interface OrdersDetailFacadeLocal {
     List<OrdersDetail> findRange(int[] range);
 
     int count();
+
+    public List<OrdersDetail> listOrdersDetailByOrderID(Orders billid);
     
 }

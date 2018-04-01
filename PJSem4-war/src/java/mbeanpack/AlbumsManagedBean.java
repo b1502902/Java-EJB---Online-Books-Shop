@@ -106,6 +106,7 @@ public class AlbumsManagedBean {
     public List<Albums> showAllAlbumsOfUser(){
         FacesContext context = FacesContext.getCurrentInstance();
         String username = (String) context.getExternalContext().getSessionMap().get("username");
+        System.out.println("showallalb nhan username "+username);
         Users u = usersFacade.find(usersFacade.findIdByUsername(username));
         System.out.println(u);
         return albumsFacade.showAllAlbumsOfUser(u);

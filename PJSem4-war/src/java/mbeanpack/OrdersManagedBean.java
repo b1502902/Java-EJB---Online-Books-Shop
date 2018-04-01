@@ -6,15 +6,22 @@
 package mbeanpack;
 
 import entitypack.Orders;
+import entitypack.OrdersDetail;
+import entitypack.Products;
 import entitypack.Users;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.facelets.FaceletContext;
 import sbeanpack.OrdersDetailFacadeLocal;
 import sbeanpack.OrdersFacadeLocal;
+import sbeanpack.ProductsFacadeLocal;
 import sbeanpack.UsersFacadeLocal;
 
 /**
@@ -24,6 +31,9 @@ import sbeanpack.UsersFacadeLocal;
 @Named(value = "ordersManagedBean")
 @Dependent
 public class OrdersManagedBean {
+
+    @EJB
+    private ProductsFacadeLocal productsFacade;
 
     @EJB
     private UsersFacadeLocal usersFacade;
@@ -114,12 +124,58 @@ public class OrdersManagedBean {
         this.orderNote = orderNote;
     }
     
-    public void addToOrder(){
+    public String addToOrder(){
+        System.out.println(orderName+orderPhone+orderAddress+orderNote);
         FacesContext context = FacesContext.getCurrentInstance();
         String username = (String) context.getExternalContext().getSessionMap().get("username");
         userID = usersFacade.find(usersFacade.findIdByUsername(username));
         orderDate = new Date();
-        Orders order = new Orders(orderDate, userID, orderName, orderStatus, orderPhone, orderAddress, orderNote);
+        orderStatus = "waiting";
+        orderName = context.getExternalContext().getRequestParameterMap().get("orderName");
+        orderPhone = context.getExternalContext().getRequestParameterMap().get("orderPhone");
+        orderAddress = context.getExternalContext().getRequestParameterMap().get("orderAddress");
+        orderNote = context.getExternalContext().getRequestParameterMap().get("orderNote");
+        System.out.println(orderName+orderPhone+orderAddress+orderNote);
+        Orders order = new Orders(orderDate, orderName, orderStatus, orderPhone, orderAddress, orderNote, userID);
+        ordersFacade.create(order);
         
+        List<CartItem> listitem = (List<CartItem>) context.getExternalContext().getSessionMap().get("ucart");
+        for (CartItem ci : listitem) {
+            Products p = productsFacade.find(ci.getItemID());
+            OrdersDetail ordersDetail = new OrdersDetail(ci.getItemQuantity(), ci.getItemPrice(), order, p);
+            ordersDetailFacade.create(ordersDetail);
+            p.setProductQuantity(p.getProductQuantity() - ci.getItemQuantity());
+            productsFacade.edit(p);
+        }
+        
+        context.getExternalContext().getSessionMap().remove("ucart");
+        context.getExternalContext().getSessionMap().put("billid", order.getOrderID());
+        addMessage("Order has been submit!");
+        return "cart2.xhtml";
+    }
+    
+    public List<CartItem> listCIByOrderID(){
+        List<CartItem> listci = new ArrayList<>();
+        FacesContext context = FacesContext.getCurrentInstance();
+        int billid = (int) context.getExternalContext().getSessionMap().get("billid");
+        List<OrdersDetail> listodetail = ordersDetailFacade.listOrdersDetailByOrderID(ordersFacade.find(billid));
+        for (OrdersDetail odd : listodetail) {
+            Products p = productsFacade.find(odd.getProductID().getProductID());
+            CartItem ci = new CartItem(p.getProductID(), p.getProductName(), odd.getQuantity(), odd.getPrice());
+            listci.add(ci);
+        }
+        return listci;
+    }
+    
+    
+    
+    public Orders orderByOrderID(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        int billid = (int) context.getExternalContext().getSessionMap().get("billid");
+        return ordersFacade.find(billid);
+    }
+    public void addMessage(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

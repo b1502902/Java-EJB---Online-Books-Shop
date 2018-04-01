@@ -19,6 +19,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import sbeanpack.ProductsFacadeLocal;
 import sbeanpack.UsersFacadeLocal;
 
@@ -27,7 +28,7 @@ import sbeanpack.UsersFacadeLocal;
  * @author salin_000
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class ShoppingCartManagedBean {
     @EJB
     private UsersFacadeLocal usersFacade;
@@ -39,7 +40,7 @@ public class ShoppingCartManagedBean {
     private int billID;
     private int productID;
     private int buyQuantity;
-    public List<CartItem> listitem;
+    
 
     public int getUserID() {
         return userID;
@@ -84,6 +85,8 @@ public class ShoppingCartManagedBean {
     public int[] checkItemExistsCart(int itemID){
         int[] x = {-1,-1};
         int flagci = 0;
+        HttpSession hs = SessionManaged.getSession();
+        List<CartItem> listitem = (List<CartItem>) hs.getAttribute("ucart");
         for (CartItem ci : listitem) {
             if(itemID == ci.getItemID()){
                 x[0] = flagci;
@@ -122,6 +125,8 @@ public class ShoppingCartManagedBean {
         System.out.println("hehe: "+itemID+"|"+buyQuantity);
         Products p = productsFacade.find(new Integer(itemID));
         CartItem i = new CartItem(itemID, p.getProductName(),buyQuantity, p.getProductPrice());
+        HttpSession hs = SessionManaged.getSession();
+        List<CartItem> listitem = (List<CartItem>) hs.getAttribute("ucart");
         if(listitem == null){
            listitem = new ArrayList<CartItem>();
            listitem.add(i);
@@ -135,6 +140,7 @@ public class ShoppingCartManagedBean {
                  listitem.set(checkItemExistsCart(itemID)[0], i);
             }
         }
+        hs.setAttribute("ucart", listitem);
         addMessage("The product has been added to your cart!");
         
     }
@@ -149,6 +155,8 @@ public class ShoppingCartManagedBean {
         Products p = productsFacade.find(new Integer(itemID));
         buyQuantity = itemQuantity;
         CartItem i = new CartItem(itemID, p.getProductName(),buyQuantity, p.getProductPrice());
+        HttpSession hs = SessionManaged.getSession();
+        List<CartItem> listitem = (List<CartItem>) hs.getAttribute("ucart");
         if(listitem == null){
            listitem = new ArrayList<CartItem>();
            listitem.add(i);
@@ -162,21 +170,31 @@ public class ShoppingCartManagedBean {
                  listitem.set(checkItemExistsCart(itemID)[0], i);
             }
         }
+        hs.setAttribute("ucart", listitem);
         addMessage("The product has been added to your cart!");
     }
     
     public void changeItemCartQuantity(String quant){
         String a = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("itemID");
         int itemID = Integer.parseInt(a);
+        HttpSession hs = SessionManaged.getSession();
+        List<CartItem> listitem = (List<CartItem>) hs.getAttribute("ucart");
         for (CartItem i : listitem) {
             if(i.getItemID() == itemID){
-                i.setItemQuantity(Integer.parseInt(quant));
-                System.out.println(listitem.indexOf(i));
-                listitem.set(listitem.indexOf(i), i);
-                break;
+                if(Integer.parseInt(quant)<=0){
+                    listitem.remove(i);
+                    break;
+                } else{
+                    i.setItemQuantity(Integer.parseInt(quant));
+                    System.out.println(listitem.indexOf(i));
+                    listitem.set(listitem.indexOf(i), i);
+                    break;
+                }
+                
             }
         }
         
+        hs.setAttribute("ucart", listitem);
         addMessage("Quantity has been updated!");
     }
     
@@ -184,10 +202,13 @@ public class ShoppingCartManagedBean {
         
         return iprice.multiply(new BigDecimal(quant));
     }
-    public BigDecimal totalAllPrice(){
-        BigDecimal totalAll= BigDecimal.ZERO;   
-        for (CartItem i : listitem) {
-            totalAll = totalAll.add(totalPrice(i.getItemQuantity(), i.getItemPrice()));
+    public BigDecimal totalAllPrice(List<CartItem> listitem){
+        BigDecimal totalAll= BigDecimal.ZERO;
+        HttpSession hs = SessionManaged.getSession();
+        if(listitem!=null){
+            for (CartItem i : listitem) {
+                totalAll = totalAll.add(totalPrice(i.getItemQuantity(), i.getItemPrice()));
+            }
         }
         return totalAll;
     }
@@ -196,7 +217,20 @@ public class ShoppingCartManagedBean {
         System.out.println("đã nhận phương thức");
     }
     public List<CartItem> showCart(){
+        HttpSession hs = SessionManaged.getSession();
+        List<CartItem> listitem = (List<CartItem>) hs.getAttribute("ucart");
         return listitem;
+    }
+    
+    public int countCart(){
+        HttpSession hs = SessionManaged.getSession();
+        List<CartItem> listitem = (List<CartItem>) hs.getAttribute("ucart");
+        if(listitem!=null){
+            return listitem.size();
+        }else{
+            return 0;
+        }
+        
     }
     
     public void buttonAction(ActionEvent actionEvent) {

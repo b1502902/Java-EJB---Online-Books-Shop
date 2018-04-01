@@ -18,17 +18,17 @@
 
             <ui:define name="content">
 
-                <h:form>
-                    <p:dataTable var="ci" value="#{shoppingCartManagedBean.showCart()}">
+
+                <p:dataTable var="ci" value="#{shoppingCartManagedBean.showCart()}">
                     <p:column headerText="Product">
                         <h:outputText value="#{ci.itemName}" />
                     </p:column>
                     <p:column headerText="Quantity">
-                        <h:form>
+                        <h:form id="quantFrm">
                             <p:growl id="growl" life="3000" />
                             <input type="hidden" class="span1" name="itemID" value="#{ci.itemID}"/>
                             <p:inputText type="number" value="#{ci.itemQuantity}" binding="#{quant}" styleClass="span1"/>
-                            <p:commandButton id="nonAjax" update="growl" actionListener="#{shoppingCartManagedBean.changeItemCartQuantity(quant.value)}" value="Update"/>
+                            <p:commandButton id="nonAjax" ajax="false" update="growl" actionListener="#{shoppingCartManagedBean.changeItemCartQuantity(quant.value)}" value="Update"/>
                         </h:form>
                     </p:column>
                     <p:column headerText="Price of 1">
@@ -36,24 +36,36 @@
                     </p:column>
                     <c:if test="#{shoppingCartManagedBean.showCart() != null}">
                         <p:column headerText="Total Price">
-                            <h:outputText value="#{shoppingCartManagedBean.totalPrice(ci.itemQuantity, ci.itemPrice)}"/>
+                            <h:outputText value="$#{shoppingCartManagedBean.totalPrice(ci.itemQuantity, ci.itemPrice)}"/>
                         </p:column>
                     </c:if>
-                    
+
                 </p:dataTable>
                 <c:if test="#{shoppingCartManagedBean.showCart() != null}">
-                    <h4 class="alignR">Total All: #{shoppingCartManagedBean.totalAllPrice()}</h4>
+                    <h4 class="alignR">Total All: $#{shoppingCartManagedBean.totalAllPrice(shoppingCartManagedBean.showCart())}</h4>
+
+                    <c:if test="#{!empty session.getAttribute('username')}">
+                        <p:accordionPanel>
+                            <p:tab title="Customer's Information">
+                                <h:form id="cart1Frm" >
+                                    Fullname:<br/>
+                                    <input type="text" name="orderName" value="#{usersManagedBean.getUserLogged().userRealname}"/><br/>
+                                    Phone Number:<br/>
+                                    <input type="text" name="orderPhone" value="#{usersManagedBean.getUserLogged().userPhone}"/><br/>
+                                    Address:<br/>
+                                    <input type="text" name="orderAddress" value="#{usersManagedBean.getUserLogged().userAddress}"/><br/>
+                                    Note:<br/>
+                                    <textarea name="orderNote" value=""/><br/>
+                                    <h:commandButton class="btn btn-success" value="Check Bill" action="#{ordersManagedBean.addToOrder()}"/>
+                                </h:form>
+                            </p:tab>
+                        </p:accordionPanel>
+                    </c:if>
+                    <c:if test="#{empty session.getAttribute('username')}">
+                        You need <a href="#login" data-toggle="modal" style="color: green">Login</a> or <a href="register.xhtml" style="color: green">Register</a> to check your bill!
+                    </c:if>
                 </c:if>
 
-                <p:accordionPanel>
-                    <p:tab title="Customer's Information">
-                        
-                    </p:tab>
-                </p:accordionPanel>
-                    <p:commandButton/>
-                </h:form>
-                
-                    
             </ui:define>
 
         </ui:composition>

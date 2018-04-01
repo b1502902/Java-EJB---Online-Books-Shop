@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./templates/guest/indexTemplate.xhtml">
+
+            <ui:define name="carouselBlk">
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p:panel style="margin-bottom:20px" id="content">
+                    <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                        <p:printer target="printhere" />
+                    </p:commandButton>
+
+
+                    
+                        
+                            <b>Bill ID: </b>#{ordersManagedBean.orderByOrderID().orderID}<br/>
+                            <b>Fullname: </b>#{ordersManagedBean.orderByOrderID().orrderName}<br/>
+                            <b>Phone: </b>#{ordersManagedBean.orderByOrderID().orderPhone}<br/>
+                            <b>Address: </b>#{ordersManagedBean.orderByOrderID().orderAddress}<br/>
+                            <br/>
+                            <p:dataTable  id="printhere" styleClass="contentTable" var="ci" value="#{ordersManagedBean.listCIByOrderID()}">
+                                <p:column headerText="Product">
+                                    <h:outputText value="#{ci.itemName}" />
+                                </p:column>
+
+                                <p:column headerText="Quantity">
+                                    <h:outputText value="#{ci.itemQuantity}" />
+                                </p:column>
+
+                                <p:column headerText="Price">
+                                    <h:outputText value="#{ci.itemPrice}" />
+                                </p:column>
+
+                            </p:dataTable>
+                            <h4 class="alignR">Total All: $#{shoppingCartManagedBean.totalAllPrice(ordersManagedBean.listCIByOrderID())}</h4>
+
+                        
+                    </p:panel>
+               </h:form>              
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

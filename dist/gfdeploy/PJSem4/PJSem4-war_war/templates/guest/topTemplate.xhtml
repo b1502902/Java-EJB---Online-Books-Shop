@@ -27,13 +27,17 @@
                                 #{session.getAttribute('username')}
                             </strong>
                             
-                            <h:form>
+                            <h:form id="userForm">
                                 <p:growl id="growl" life="3000" />
                                 <h:outputLink id="albumUser" value="useralbums.xhtml" class="btn">
                                     User's Albums
                                 </h:outputLink>
                                 <p:commandButton value="Edit Profile" id="editUser" actionListener="#" ajax="false" />
                                 <h:commandButton value="Log out" id="logoutUser" action="#{usersManagedBean.logoutUser()}" class="btn btn-danger"/>
+                                
+                                
+                                
+    
 
                             </h:form>
                         
@@ -41,13 +45,13 @@
                     </div>
                     <div class="span6">
                         <div class="pull-right">
-                            <a href="product_summary.html"><span class="">Fr</span></a>
+                            <!--<a href="product_summary.html"><span class="">Fr</span></a>
                             <a href="product_summary.html"><span class="">Es</span></a>
                             <span class="btn btn-mini">En</span>
                             <a href="product_summary.html"><span>&pound;</span></a>
                             <span class="btn btn-mini">$155.00</span>
-                            <a href="product_summary.html"><span class="">$</span></a>
-                            <a href="product_summary.html"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ 3 ] Itemes in your cart </span> </a> 
+                            <a href="product_summary.html"><span class="">$</span></a>-->
+                            <a href="cart1.xhtml"><span class="btn btn-mini btn-primary"><i class="ui-icon-cart"></i> [ #{shoppingCartManagedBean.countCart()} ] Itemes in your cart </span> </a> 
                         </div>
                     </div>
                 </div>
@@ -59,7 +63,7 @@
                         <span class="icon-bar"></span>
                     </a>
                     <div class="navbar-inner">
-                        <a class="brand" href="index_old.html"><img src="themes/images/logo.png" alt="Bootsshop"/></a>
+                        <a class="brand" href="index.xhtml"><img src="resources/img/dvd-logo-1.png" alt="Bootsshop"/></a>
                         <h:form id="frmSearch" class="form-inline navbar-search">
                             <h:inputText class="srchTxt" value="#{productsManagedBean.skeyword}"/>
                             <h:commandButton class="btn btn-primary" value="Search" action="#{productsManagedBean.actionSearchProducts()}"/>
@@ -92,7 +96,7 @@
                                 <div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false" >
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        <h3>Login Block</h3>
+                                        <h3>Login</h3>
                                     </div>
                                     <div class="modal-body">
                                         <h:form class="form-horizontal loginFrm">
@@ -107,7 +111,9 @@
                                                 <p:commandButton value="Sign in" id="nonAjax" update="growl" ajax="false" action="#{usersManagedBean.loginUser()}"/>
                                                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                                             </div>
+                                            
                                         </h:form>
+                                        Not have account, <a href="register.xhtml">Register now!</a>
                                         <!--<form class="form-horizontal loginFrm">
                                           <div class="control-group">								
                                                 <input type="text" id="inputEmail" placeholder="Email"/>

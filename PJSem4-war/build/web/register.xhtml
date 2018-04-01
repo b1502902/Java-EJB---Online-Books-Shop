@@ -17,36 +17,50 @@
 
             <ui:define name="content">
                 <h:form>
+                    <h:outputText value="#{usersManagedBean.msg}" style="color: green"/>
                     <h:panelGrid columns="2">
-                        <h:outputLabel for="username" value="Username"/>
-                        <h:inputText id="username" value="#{userManagerBean.username}" required="true" requiredMessage="Username can not be empty!">
-                            <f:validateLength minimum="3" maximum="16"/>
-                        </h:inputText><br/>
-                        <h:message for="username" style="color: red"  />
+                        <h:outputLabel for="username" value="Username* "/>
+                        <h:panelGroup>
+                            <h:inputText id="username" value="#{usersManagedBean.username}" required="true" requiredMessage="Username can not be empty!">
+                                <f:validateLength minimum="3" maximum="16"/>
+                            </h:inputText>
+                            <h:message for="username" style="color: red"  />
+                        </h:panelGroup>
+                        
 
-                        <h:outputLabel for="password" value="Password"/>
-                        <h:inputSecret id="password" value="#{userManagerBean.password}" required="true" requiredMessage="Password can not be empty!">
-                            <f:validateLength minimum="6" maximum="16"/>
-                        </h:inputSecret><br/>
-                        <h:message for="password" style="color: red" />
+                        <h:outputLabel for="password" value="Password* "/>
+                        <h:panelGroup>
+                            <h:inputSecret id="password" value="#{usersManagedBean.password}" required="true" requiredMessage="Password can not be empty!">
+                                <f:validateLength minimum="6" maximum="16"/>
+                            </h:inputSecret>
+                            <h:message for="password" style="color: red" />
+                        </h:panelGroup>
+                        
 
-                        <h:outputLabel for="realname" value="Real Name"/>
-                        <h:inputText id="realname" value="#{userManagerBean.realname}"/>
+                        <h:outputLabel for="realname" value="Real Name "/>
+                        <h:inputText id="realname" value="#{usersManagedBean.userRealname}"/>
 
-                        <h:outputLabel for="email" value="Email"/>
-                        <h:inputText id="useemailrname" value="#{userManagerBean.email}" required="true" requiredMessage="Email can not be empty!">
-                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
-                        </h:inputText><br/>
-                        <h:message for="email" style="color: red"/>
+                        <h:outputLabel for="email" value="Email* "/>
+                        <h:panelGroup>
+                            <h:inputText id="email" value="#{usersManagedBean.userEmail}" required="true" requiredMessage="Email can not be empty!">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                            </h:inputText>
+                            <h:message for="email" style="color: red"/>
+                        </h:panelGroup>
+                       
 
-                        <h:outputLabel for="phone" value="Phone"/>
-                        <h:inputText id="phone" value="#{userManagerBean.phone}"/>
+                        <h:outputLabel for="phone" value="Phone "/>
+                        <h:inputText id="phone" value="#{usersManagedBean.userPhone}"/>
 
-                        <h:outputLabel for="address" value="Address"/>
-                        <h:inputText id="address" value="#{userManagerBean.address}"/>
+                        <h:outputLabel for="address" value="Address "/>
+                        <h:inputText id="address" value="#{usersManagedBean.userAddress}"/>
 
-                        <h:commandButton value="Register" type="submit" action="#{userManagerBean.registerUser()}"/>
-                        <h:commandButton value="Reset" type="reset" />
+                        <h:outputLabel for="gbutton" value=""/>
+                        <h:panelGroup id="gbutton">
+                            <h:commandButton class="btn btn-primary" value="Register" type="submit" action="#{usersManagedBean.registerUser()}"/>
+                            <h:commandButton class="btn" value="Reset" type="reset" />
+                        </h:panelGroup>
+                        
 
                     </h:panelGrid>
                 </h:form>
