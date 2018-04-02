@@ -50,4 +50,32 @@ public class CategoriesManagedBean {
     public List<Categories> showAllCate(){
         return categoriesFacade.findAll();
     }
+    
+     public String createCate(){
+        Categories c = new Categories(cateName);
+        categoriesFacade.create(c);
+        return "index.xhtml";
+    }
+    
+    
+    public String linkEditCate(int cateid){
+        Categories c = categoriesFacade.find(cateid);
+        this.cateID = c.getCateID();
+        this.cateName = c.getCateName();
+        return "edit.xhtml";
+    }
+    
+    public String editCate(){
+        System.out.println("cate o day "+cateID+cateName);
+        Categories c = categoriesFacade.find(cateID);
+        c.setCateName(cateName);
+        categoriesFacade.edit(c);
+        return "index.xhtml";
+    }
+    
+    public String deleteCate(int cateid){
+        Categories c = categoriesFacade.find(cateid);
+        categoriesFacade.remove(c);
+        return "index.xhtml";
+    }
 }

@@ -14,11 +14,7 @@
             </ui:define>
             <ui:define name="content">
 
-                <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-                    <li><a href="products.html">Products</a> <span class="divider">/</span></li>
-                    <li class="active">Product Details</li>
-                </ul>	
+                
                 <div class="span9">
 
                     <p:dataGrid value="#{productsManagedBean.showOnePdetail(param['pid'])}" var="p"
@@ -28,9 +24,8 @@
                         <div class="row">
 
                             <div id="gallery" class="span3">
-                                <a href="themes/images/products/large/f1.jpg" title="Fujifilm FinePix S2950 Digital Camera">
-                                    <img src="#{p.productImg}" style="width:100%" alt="Fujifilm FinePix S2950 Digital Camera"/>
-                                </a>
+                                
+                                <img src="#{p.productImg}" style="width:100%" alt="#{p.productName}"/>
                             </div>
 
                             <div class="span6">
@@ -46,9 +41,9 @@
 
                                         <input type="hidden" class="span1" name="itemID" value="#{p.productID}"/>
                                         <h:outputLabel for="buyQuantity" value="Quantity: "/>
-                                        <h:inputText id="buyQuantity" class="span1" value="#{shoppingCartManagedBean.buyQuantity}" validatorMessage="Minimum quantity is 1 ">
-                                            <f:validateLongRange minimum="1"/>
-                                        </h:inputText>
+                                        <p:inputText type="number" id="buyQuantity" styleClass="span1" value="#{shoppingCartManagedBean.buyQuantity}" validatorMessage="Minimum quantity is 1 maximum is #{p.productQuantity}">
+                                            <f:validateLongRange minimum="1" maximum="#{p.productQuantity}"/>
+                                        </p:inputText>
                                         <h:message for="buyQuantity" style="color:red"/>
                                         <p:commandButton value="Add to cart" id="ajax" update="growl" actionListener="#{shoppingCartManagedBean.addItemToCart()}" styleClass="ui-priority-primary" />
 

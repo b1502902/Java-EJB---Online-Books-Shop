@@ -154,6 +154,21 @@ public class OrdersManagedBean {
         return "cart2.xhtml";
     }
     
+    public String cancelOrder(int odid){
+        System.out.println(odid);
+        Orders od = ordersFacade.find(odid);
+        od.setOrderStatus("cancel");
+        ordersFacade.edit(od);
+        List<OrdersDetail> listitem = ordersDetailFacade.listOrdersDetailByOrderID(od);
+        for (OrdersDetail ci : listitem) {
+            Products p = productsFacade.find(ci.getProductID().getProductID());
+            p.setProductQuantity(p.getProductQuantity() + ci.getQuantity());
+            productsFacade.edit(p);
+        }
+        addMessage("Order has been cancel!");
+        return "userorders.xhtml";
+    }
+    
     public List<CartItem> listCIByOrderID(){
         List<CartItem> listci = new ArrayList<>();
         FacesContext context = FacesContext.getCurrentInstance();
@@ -167,12 +182,29 @@ public class OrdersManagedBean {
         return listci;
     }
     
-    
+    public List<CartItem> listCIByOrderID(int odid){
+        List<CartItem> listci = new ArrayList<>();
+        List<OrdersDetail> listodetail = ordersDetailFacade.listOrdersDetailByOrderID(ordersFacade.find(odid));
+        for (OrdersDetail odd : listodetail) {
+            Products p = productsFacade.find(odd.getProductID().getProductID());
+            CartItem ci = new CartItem(p.getProductID(), p.getProductName(), odd.getQuantity(), odd.getPrice());
+            listci.add(ci);
+        }
+        return listci;
+    }
+    public List<Orders> listOrderByUserID(){
+       FacesContext context = FacesContext.getCurrentInstance();
+       Users u = usersFacade.find(usersFacade.findIdByUsername((String) context.getExternalContext().getSessionMap().get("username")));
+       return ordersFacade.listOrdersByUserID(u);
+    }
     
     public Orders orderByOrderID(){
         FacesContext context = FacesContext.getCurrentInstance();
         int billid = (int) context.getExternalContext().getSessionMap().get("billid");
         return ordersFacade.find(billid);
+    }
+    public Orders orderByOrderID(int odid){
+        return ordersFacade.find(odid);
     }
     public void addMessage(String summary) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);

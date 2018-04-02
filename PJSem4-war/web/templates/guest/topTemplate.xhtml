@@ -26,19 +26,18 @@
                             <strong>
                                 #{session.getAttribute('username')}
                             </strong>
-                            
+                                
                             <h:form id="userForm">
-                                <p:growl id="growl" life="3000" />
                                 <h:outputLink id="albumUser" value="useralbums.xhtml" class="btn">
-                                    User's Albums
+                                    Albums
                                 </h:outputLink>
-                                <p:commandButton value="Edit Profile" id="editUser" actionListener="#" ajax="false" />
+                                <h:outputLink id="orderUser" value="userorders.xhtml" class="btn">
+                                    Orders
+                                </h:outputLink>
+                                <h:commandLink id="editUser" value="Edit Profile" action="#{usersManagedBean.linkEditProfile()}" class="btn"/>
+                                <p:growl id="growl" life="3000" />
                                 <h:commandButton value="Log out" id="logoutUser" action="#{usersManagedBean.logoutUser()}" class="btn btn-danger"/>
                                 
-                                
-                                
-    
-
                             </h:form>
                         
                         </c:if>
@@ -81,9 +80,9 @@
                                       <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
                                </form>-->
                         <ul id="topMenu" class="nav pull-right">
-                            <li class=""><a href="special_offer.html">Specials Offer</a></li>
-                            <li class=""><a href="normal.html">Delivery</a></li>
-                            <li class=""><a href="contact.html">Contact</a></li>
+                            <c:forEach items="#{categoriesManagedBean.showAllCate()}" var="cate">
+                                <li class=""><h:outputLink value="products.xhtml?cateid=#{cate.cateID}">#{cate.cateName}</h:outputLink></li>
+                            </c:forEach>
                             <li class="">
                                 <c:if test="${empty session.getAttribute('username')}">
                                     <a href="#login" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>

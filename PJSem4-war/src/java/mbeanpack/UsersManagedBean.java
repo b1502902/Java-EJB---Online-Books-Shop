@@ -7,12 +7,16 @@
 package mbeanpack;
 
 import entitypack.Users;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.html.HtmlInputSecret;
+import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import sbeanpack.UsersFacadeLocal;
@@ -35,8 +39,14 @@ public class UsersManagedBean {
     private String userEmail;
     private String userPhone;
     private String userAddress;
+    private String oldpassword;
+    private String newpassword;
+    
+    
     
     private String msg;
+
+    
     
     /**
      * Creates a new instance of UsersManagedBean
@@ -67,7 +77,7 @@ public class UsersManagedBean {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    
     public String getUserRule() {
         return userRule;
     }
@@ -107,7 +117,22 @@ public class UsersManagedBean {
     public void setUserAddress(String userAddress) {
         this.userAddress = userAddress;
     }
-    
+
+    public String getOldpassword() {
+        return oldpassword;
+    }
+
+    public void setOldpassword(String oldpassword) {
+        this.oldpassword = oldpassword;
+    }
+
+    public String getNewpassword() {
+        return newpassword;
+    }
+
+    public void setNewpassword(String newpassword) {
+        this.newpassword = newpassword;
+    }    
     public String getMsg() {
         return msg;
     }
@@ -168,7 +193,12 @@ public class UsersManagedBean {
         Users u = usersFacade.find(usersFacade.findIdByUsername(username));
         return u;
     }
-    
+    public List<Users> listUserLogged(){
+        Users u = getUserLogged();
+        List<Users> lu = new ArrayList<Users>();
+        lu.add(u);
+        return lu;
+    }
 //    public String loginUser() {
 //        System.out.println("day ne: " + username + password);
 //        System.out.println(usersFacade.checkLogin(username, password));
@@ -183,6 +213,43 @@ public class UsersManagedBean {
 //        return "index.xhtml";
 //    }
     
+    public String linkEditProfile(){
+        HttpSession hs = SessionManaged.getSession();
+        String userid = (String) hs.getAttribute("username");
+        Users u = usersFacade.find(usersFacade.findIdByUsername(userid));
+        this.userID = u.getUserID();
+        this.username = u.getUsername();
+        this.newpassword = "";
+        this.userRealname = u.getUserRealname();
+        this.userEmail = u.getUserEmail();
+        this.userPhone = u.getUserPhone();
+        this.userAddress = u.getUserAddress();
+        return "editprofile.xhtml";
+    }
+    
+    public void editProfile(){
+        HttpSession hs = SessionManaged.getSession();
+        String userid = (String) hs.getAttribute("username");
+        Users u = usersFacade.find(usersFacade.findIdByUsername(userid));
+        System.out.println("realname o day: "+userRealname+"oldpass "+oldpassword);
+        if(oldpassword.equals(u.getPassword())){
+            if(newpassword.equals("")){
+                newpassword = u.getPassword();
+            }
+            u.setPassword(newpassword);
+            u.setUserRealname(userRealname);
+            u.setUserEmail(userEmail);
+            u.setUserPhone(userPhone);
+            u.setUserAddress(userAddress);
+            usersFacade.edit(u);
+            addMessage("Profile has been update");
+        }else{
+            addMessage("Wrong password!");
+        }
+        
+        
+    }
+    
     public String showSessionUsername(){
         HttpSession session = SessionManaged.getSession();
         return (String) session.getAttribute(username);
@@ -191,6 +258,12 @@ public class UsersManagedBean {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+    
+
+    
+
+    
 }
 
     

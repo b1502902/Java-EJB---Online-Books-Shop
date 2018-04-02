@@ -131,6 +131,14 @@ public class AlbumsManagedBean {
         return ls;
     }
     
+    public void addAlbum(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        String username = (String) context.getExternalContext().getSessionMap().get("username");
+        Users u = usersFacade.find(usersFacade.findIdByUsername(username));
+        Albums a = new Albums(albumName, u);
+        albumsFacade.create(a);
+        addMessage("Album added successful!");
+    }
     public void addProductToAlbum(){
         UsersManagedBean um = new UsersManagedBean();
         //lay product

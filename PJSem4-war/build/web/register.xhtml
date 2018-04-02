@@ -22,7 +22,7 @@
                         <h:outputLabel for="username" value="Username* "/>
                         <h:panelGroup>
                             <h:inputText id="username" value="#{usersManagedBean.username}" required="true" requiredMessage="Username can not be empty!">
-                                <f:validateLength minimum="3" maximum="16"/>
+                                <f:validateLength minimum="3" maximum="100"/>
                             </h:inputText>
                             <h:message for="username" style="color: red"  />
                         </h:panelGroup>
@@ -31,7 +31,7 @@
                         <h:outputLabel for="password" value="Password* "/>
                         <h:panelGroup>
                             <h:inputSecret id="password" value="#{usersManagedBean.password}" required="true" requiredMessage="Password can not be empty!">
-                                <f:validateLength minimum="6" maximum="16"/>
+                                <f:validateLength minimum="6" maximum="500"/>
                             </h:inputSecret>
                             <h:message for="password" style="color: red" />
                         </h:panelGroup>

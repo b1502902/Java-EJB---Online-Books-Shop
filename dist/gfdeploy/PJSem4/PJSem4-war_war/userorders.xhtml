@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./templates/guest/indexTemplate.xhtml">
+
+            <ui:define name="carouselBlk">
+            </ui:define>
+
+            <ui:define name="content">
+                <p:dataTable value="#{ordersManagedBean.listOrderByUserID()}" var="od"
+                             rows="10"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             >
+                    <p:column headerText="Id">
+                        <h:outputText value="#{od.orderID}" />
+                    </p:column>
+
+                    <p:column headerText="Date">
+                        <h:outputText value="#{od.orderDate}">
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Status">
+                        <h:outputText value="#{od.orderStatus}" />
+                    </p:column>
+
+                    <p:column headerText="Order Name">
+                        <h:outputText value="#{od.orrderName}" />
+                    </p:column>
+                    
+                    <p:column headerText="">
+                        <h:outputLink value="order.xhtml?odid=#{od.orderID}">View Detail</h:outputLink>
+                        <h:form id="ordereditFrm">
+                            <p:growl id="growl" life="3000" />
+                            <p:commandButton styleClass="btn btn-warning" value="Cancel" id="nonAjax" update="growl" ajax="false" action="#{ordersManagedBean.cancelOrder(od.orderID)}"/>
+                        </h:form>
+                    </p:column>
+                </p:dataTable>
+
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

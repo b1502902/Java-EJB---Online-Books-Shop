@@ -65,6 +65,12 @@ public class Artists implements Serializable {
         this.artistID = artistID;
     }
 
+    public Artists(String artistName, String artistProfile, String artistImg) {
+        this.artistName = artistName;
+        this.artistProfile = artistProfile;
+        this.artistImg = artistImg;
+    }
+
     public Artists(Integer artistID, String artistName) {
         this.artistID = artistID;
         this.artistName = artistName;

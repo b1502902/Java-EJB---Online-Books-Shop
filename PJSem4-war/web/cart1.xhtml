@@ -21,7 +21,9 @@
 
                 <p:dataTable var="ci" value="#{shoppingCartManagedBean.showCart()}">
                     <p:column headerText="Product">
-                        <h:outputText value="#{ci.itemName}" />
+                        <h:outputLink value="product_details.xhtml?pid=#{ci.itemID}">
+                            <h:outputText value="#{ci.itemName}" />
+                        </h:outputLink>
                     </p:column>
                     <p:column headerText="Quantity">
                         <h:form id="quantFrm">

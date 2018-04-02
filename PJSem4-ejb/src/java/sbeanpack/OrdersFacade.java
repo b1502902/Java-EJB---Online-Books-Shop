@@ -7,9 +7,12 @@
 package sbeanpack;
 
 import entitypack.Orders;
+import entitypack.Users;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +32,10 @@ public class OrdersFacade extends AbstractFacade<Orders> implements OrdersFacade
         super(Orders.class);
     }
     
+    @Override
+    public List<Orders> listOrdersByUserID(Users userid){
+        Query query = em.createQuery("SELECT o FROM Orders o WHERE o.userID = :userid",Orders.class);
+        query.setParameter("userid", userid);
+        return query.getResultList();
+    }
 }

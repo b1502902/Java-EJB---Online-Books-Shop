@@ -18,7 +18,7 @@
 
 
             <ui:define name="content">
-                <div id="login" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false" >
+                <div id="addalb" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false" >
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         <h3>Create new album</h3>
@@ -30,14 +30,14 @@
                                                 <h:inputText id="inputAlbumName" value="#{albumsManagedBean.albumName}"/>
                                             </div>
                                             <div class="control-group">
-                                                <p:commandButton value="Create" id="nonAjax" update="growl" ajax="false" action="#{usersManagedBean.loginUser()}"/>
+                                                <p:commandButton value="Create" id="nonAjax" update="growl" ajax="false" action="#{albumsManagedBean.addAlbum()}"/>
                                                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                                             </div>
                                         </h:form>
                                         </div>
                                     </div>
                 
-                <a href="#login" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-primary">+</span></a>
+                <a href="#addalb" role="button" data-toggle="modal" style="padding-right:0"><span class="btn btn-primary">+</span></a>
                 <p:dataTable var="alb" value="#{albumsManagedBean.showAllAlbumsOfUser()}">
 
                     <p:column headerText="List of your albums">

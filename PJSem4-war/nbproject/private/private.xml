@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/web/useralbums.xhtml</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/src/java/mbeanpack/ShoppingCartManagedBean.java</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/web/product_details.xhtml</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/web/cart1.xhtml</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/src/java/mbeanpack/OrdersManagedBean.java</file>
-            <file>file:/E:/github1/PJSem4/PJSem4-war/src/java/mbeanpack/AlbumsManagedBean.java</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-war/src/java/mbeanpack/CategoriesManagedBean.java</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-war/web/admin/artists/create.xhtml</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-war/web/admin/categories/index.xhtml</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-war/web/admin/artists/index.xhtml</file>
+            <file>file:/E:/github1/PJSem4/PJSem4-war/src/java/mbeanpack/ArtistsManagedBean.java</file>
         </group>
     </open-files>
 </project-private>

@@ -52,6 +52,11 @@ public class Albums implements Serializable {
     public Albums() {
     }
 
+    public Albums(String albumName, Users userID) {
+        this.albumName = albumName;
+        this.userID = userID;
+    }
+
     public Albums(Integer albumID) {
         this.albumID = albumID;
     }
