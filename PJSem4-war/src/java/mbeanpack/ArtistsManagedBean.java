@@ -108,6 +108,7 @@ public class ArtistsManagedBean {
 
     public String createArtist(){
         Artists a = new Artists(artistName, artistProfile, artistImage);
+        artistsFacade.create(a);
         return "index.xhtml";
     }
 

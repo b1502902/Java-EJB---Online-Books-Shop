@@ -185,10 +185,15 @@ public class ShoppingCartManagedBean {
                     listitem.remove(i);
                     break;
                 } else{
-                    i.setItemQuantity(Integer.parseInt(quant));
-                    System.out.println(listitem.indexOf(i));
-                    listitem.set(listitem.indexOf(i), i);
-                    break;
+                    if(Integer.parseInt(quant)<=productsFacade.find(i.getItemID()).getProductQuantity()){
+                        i.setItemQuantity(Integer.parseInt(quant));
+                        System.out.println(listitem.indexOf(i));
+                        listitem.set(listitem.indexOf(i), i);
+                        break;
+                    } else{
+                        addMessage("Maximum quantity of "+productsFacade.find(i.getItemID()).getProductName()+" is "+productsFacade.find(i.getItemID()).getProductQuantity());
+                    }
+                    
                 }
                 
             }

@@ -219,7 +219,14 @@ public class ProductsManagedBean {
         plist = productsFacade.searchProducts(skeyword);
         return plist;
     }
+    public Products getProductByID(int pid){
+        return productsFacade.find(pid);
+    }
     
+    public int getPQuantityByPID(int pid){
+        Products p = productsFacade.find(pid);
+        return p.getProductQuantity();
+    }
     public Products showProduct(){
         return productsFacade.find(productID);
     }
