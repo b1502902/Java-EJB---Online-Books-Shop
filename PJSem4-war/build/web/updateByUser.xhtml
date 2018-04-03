@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./templates/guest/indexTemplate.xhtml">
+
+            
+
+            <ui:define name="carouselBlk">
+                
+            </ui:define>
+
+            
+
+            <ui:define name="content">
+                <h:form>
+                    
+                    <h:panelGrid columns="2">
+                        
+                        
+                        <h:outputLabel for="username" value="User Name"/>
+                        <h:inputText value="#{usersManagedBean.username}" required="true" requiredMessage="Username can not be empty!">
+                            <f:validateLength minimum="3" maximum="16"/>
+                        </h:inputText>
+                        
+                        <h:outputLabel for="realname" value="User Real Name"/>
+                        <h:inputText value="#{usersManagedBean.userRealname}"/>
+                        
+                        <h:outputLabel for="email" value="User Email"/>
+                        <h:inputText value="#{usersManagedBean.userEmail}" required="true" requiredMessage="Email can not be empty!">
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                        </h:inputText>
+                        <h:outputLabel for="phone" value="User Phone"/>
+                        <h:inputText value="#{usersManagedBean.userPhone}"/>
+                        
+                        <h:outputLabel for="address" value="User Address"/>
+                        <h:inputText value="#{usersManagedBean.userAddress}"/>
+                        
+                        <h:commandButton value="Update" type="submit" action="#{usersManagedBean.updateUser()}"/>
+                        <h:commandButton value="Reset" type="reset"/>
+                        
+                                                    <h:message for="username" style="color: red"  />
+                                                    <h:message for="email" style="color: red"/>
+                                                  
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+
+            
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -30,6 +30,14 @@ public class CategoriesManagedBean {
      */
     public CategoriesManagedBean() {
     }
+    public List<Categories> getList() {
+        return categoriesFacade.findAll();
+    }
+     public String delete (String id){
+        Categories categories = categoriesFacade.find(new Integer(id));
+        categoriesFacade.remove(categories);
+        return "Category";
+    }
 
     public int getCateID() {
         return cateID;

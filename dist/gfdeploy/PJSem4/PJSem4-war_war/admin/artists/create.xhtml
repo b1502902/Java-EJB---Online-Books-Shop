@@ -11,20 +11,20 @@
         <ui:composition template="./../../templates/admin/adindexTemplate.xhtml">
 
             <ui:define name="content">
-                <h:form enctype="multipart/form-data">
-                    
-
-                    <h:outputLabel for="aName" value="Name"/>
+                <f:view>
+                    <h:form enctype="multipart/form-data">
+                    <h:outputText value="Name"/>
                     <h:inputText id="aName" value="#{artistsManagedBean.artistName}"/>
                     <br/>
-                    <h:outputLabel for="aProfile" value="Profile"/>
-                    <p:inputTextarea rows="10" cols="50" completeMethod="#{artistsManagedBean.artistProfile}" queryDelay="750" minQueryLength="4" />
+                    <h:outputText value="Profile"/>
+                    <p:inputTextarea id="aProfile" rows="10" cols="50" completeMethod="#{artistsManagedBean.artistProfile}" queryDelay="750" minQueryLength="4" />
                     <br/>
-                    <h:outputLabel for="aImg" value="Image"/>
-                    <h:inputText id="aImg" value="#{artistsManagedBean.artistImage}"/>
+                    <h:outputText value="Image"/>
+                    <h:inputFile id="aImg" value="#{artistsManagedBean.imgFile}"/>
                     <br/>
                     <h:commandButton value="Create" action="#{artistsManagedBean.createArtist()}" />
                 </h:form>
+                </f:view>
             </ui:define>
 
         </ui:composition>

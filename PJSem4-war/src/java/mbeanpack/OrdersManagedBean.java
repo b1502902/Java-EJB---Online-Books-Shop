@@ -57,7 +57,62 @@ public class OrdersManagedBean {
     /**
      * Creates a new instance of OrdersManagedBean
      */
+    
+     private Orders order;
+     private Products product;
     public OrdersManagedBean() {
+        if (order == null) {
+            order = new Orders();
+        }
+    }
+    
+    public String changeStatus(int id, String status) {
+        Orders or = ordersFacade.find(id);
+        int quantity;
+        if (or != null) {
+            if (status.equals("cancel")) {
+                for (OrdersDetail item : or.getOrdersDetailCollection()) {
+                    quantity = item.getProductID().getProductQuantity() + item.getQuantity();
+                    item.getProductID().setProductQuantity((int) quantity);
+                    productsFacade.edit(item.getProductID());
+                }
+            }
+            or.setOrderStatus(new String(status));
+            ordersFacade.edit(or);
+            order = ordersFacade.find(id);
+        }
+        return "";
+    }
+
+    public String remove(Orders order) {
+        String i = order.getOrderStatus();
+        if (i.equals("Complete")) {
+            ordersFacade.remove(order);
+            return "";
+        } else {
+            int quantity;
+            for (OrdersDetail item : order.getOrdersDetailCollection()) {
+                quantity = item.getProductID().getProductQuantity() + item.getQuantity();
+                item.getProductID().setProductQuantity((int) quantity);
+                productsFacade.edit(item.getProductID());
+            }
+            ordersFacade.remove(order);
+            return "";
+        }
+    }
+    
+    public String deleteDetail(String id) {
+        OrdersDetail ordersDetail = ordersDetailFacade.find(new Integer(id));
+        ordersDetailFacade.remove(ordersDetail);
+        return "listOrderDetail";
+    }
+    
+    public List<Orders> getList() {
+        return ordersFacade.findAll();
+    }
+    
+    public List<OrdersDetail> getLists() {
+        return ordersDetailFacade.findAll();
     }
 
     public int getOrderID() {

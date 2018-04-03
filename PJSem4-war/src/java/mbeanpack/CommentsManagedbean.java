@@ -44,6 +44,14 @@ public class CommentsManagedbean {
      */
     public CommentsManagedbean() {
     }
+    public List<Comments> getList() {
+        return commentsFacade.findAll();
+    }
+     public String delete (String id){
+        Comments comments = commentsFacade.find(new Integer(id));
+        commentsFacade.remove(comments);
+        return "Comment";
+    }
 
     public int getCmtID() {
         return cmtID;

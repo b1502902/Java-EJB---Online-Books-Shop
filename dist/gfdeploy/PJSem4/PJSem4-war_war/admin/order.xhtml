@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./../templates/admin/adindexTemplate.xhtml">
+            <ui:define name="content">
+                <div class="content">
+
+                    <script type="text/javascript" charset="utf-8">
+                        $(document).ready(function() {
+                            $('#example').dataTable({
+                                "aaSorting": [[0, "desc"]]
+                            });
+                        });
+                    </script>
+                    <div class="page-header">
+                        <h1>Order Manager</h1>
+                    </div>
+                    <c:if test="#{not empty message}">
+                        <div class="alert alert-success">                
+                            <h4>#{message}!</h4>
+                            #{messageDetails}
+                        </div>
+                    </c:if>
+                    <div class="row-fluid">
+                        <div class="span12">                    
+                            <div class="head clearfix">
+                                <div class="isw-grid"></div>
+                                <h1>Order List</h1> 
+                                 
+                            </div>
+                            <div class="block-fluid table-sorting clearfix">
+                                <table cellpadding="0" cellspacing="0" width="100%" class="table" id="example">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>                                                
+                                            <th>Order Date</th>
+                                            <th>User ID</th>
+                                            <th>Order Name</th> 
+                                            <th>Status</th>
+                                            <th>Address</th>
+                                            <th>Phone</th>
+                                            <th>Note</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="#{ordersManagedBean.list}" var="item">
+                                            <tr>
+                                                <td style="width: 5%">#{item.orderID}</td>
+
+                                                <td style="width: 10%">
+                                                    <h:outputText value="#{item.orderDate}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                    </h:outputText>
+                                                </td>
+
+                                                <td style="width: 8%">
+                                                    <h:outputText value="#{item.userID.userID}">
+
+                                                    </h:outputText>
+                                                </td>
+
+                                                <td style="width: 15%">
+                                                    <h:outputText value="#{item.orrderName}">
+
+                                                    </h:outputText>
+                                                </td>
+
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="#{item.orderStatus == 'cancel'}">
+                                                            Cancel
+                                                        </c:when>
+                                                        <c:when test="#{item.orderStatus == 'waiting'}">
+                                                            Waiting
+                                                        </c:when>
+                                                        <c:when test="#{item.orderStatus == 'complete'}">
+                                                            Complete
+                                                        </c:when>
+
+                                                    </c:choose>
+                                                </td>
+
+                                                <td style="width: 20%">
+                                                    <h:outputText value="#{item.orderAddress}">
+
+                                                    </h:outputText>
+                                                </td>
+                                                <td style="width: 10%">
+                                                    <h:outputText value="#{item.orderPhone}">
+
+                                                    </h:outputText>
+                                                </td>
+                                                <td style="width: 20%">
+                                                    <h:outputText value="#{item.orderNote}">
+
+                                                    </h:outputText>
+                                                </td>
+
+                                                <td style="width: 30%">
+                                                    <div class="btn-group" align="center">                                        
+                                                        <button data-toggle="dropdown" class="btn dropdown-toggle">Action
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <h:form>
+
+
+                                                                <li>
+                                                                    <h:commandLink action="#{ordersManagedBean.changeStatus(item.orderID, 'waiting')}" value="Waiting" />
+                                                                </li>
+                                                                <li>
+                                                                    <h:commandLink action="#{ordersManagedBean.changeStatus(item.orderID, 'complete')}" value="Complete" />
+                                                                </li>
+                                                                <li>
+                                                                    <h:commandLink action="#{ordersManagedBean.changeStatus(item.orderID, 'Cancel')}" value="Cancel" />
+                                                                </li>
+                                                                <li>
+                                                                    <h:commandLink action="#{ordersManagedBean.remove(item)}" value="Delete" onclick="return confirm('Are you sure you want to delete ?');" />
+                                                                </li>
+
+                                                            </h:form>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+
+
+
+                                            </tr>
+                                        </c:forEach>                                                             
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="dr">
+                        <span></span>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

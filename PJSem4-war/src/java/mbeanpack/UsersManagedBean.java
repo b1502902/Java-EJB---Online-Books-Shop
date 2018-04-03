@@ -53,6 +53,43 @@ public class UsersManagedBean {
      */
     public UsersManagedBean() {
     }
+    public List<Users> getList() {
+        return usersFacade.findAll();
+    }
+    public String findUser(String id){
+        Users users = usersFacade.find(new Integer(id));
+        setUserID(users.getUserID());
+        setUsername(users.getUsername());
+        return "updateUser";
+    }
+    public String updateByUser() {
+         Users users = usersFacade.find(new Integer(this.userID));
+         users.setUsername(username);
+        users.setUserAddress(userAddress);
+        users.setUserEmail(username);
+        users.setUserPhone(userPhone);
+        users.setUserRealname(userRealname);
+        
+        usersFacade.edit(users);
+        return "index";
+     }
+    public String updateUser(){
+        Users users = usersFacade.find(new Integer(this.userID));
+        users.setUsername(username);
+        users.setUserAddress(userAddress);
+        users.setUserEmail(username);
+        users.setUserPhone(userPhone);
+        users.setUserRule(userRule);
+        users.setUserRealname(userRealname);
+        
+        usersFacade.edit(users);
+        return "infoAllUser";
+    }
+     public String deleteUser (String id){
+        Users users = usersFacade.find(new Integer(id));
+        usersFacade.remove(users);
+        return "infoAllUser";
+    }
 
     public int getUserID() {
         return userID;

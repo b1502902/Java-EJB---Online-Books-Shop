@@ -184,5 +184,10 @@ public class Orders implements Serializable {
     public String toString() {
         return "entitypack.Orders[ orderID=" + orderID + " ]";
     }
+
+    public Iterable<OrdersDetail> getOrdersDetailCollection() {
+        return null;
+      
+    }
     
 }

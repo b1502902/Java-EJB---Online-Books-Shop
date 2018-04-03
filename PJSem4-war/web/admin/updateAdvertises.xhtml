@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../templates/admin/adindexTemplate.xhtml">
+
+            
+
+            <ui:define name="content">
+                <h:form>
+                    <h:inputHidden id="advid" value="#{advertisesManagedBean.advID}"/>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="advid" value="Adv ID"/>
+                        <h:outputText value="#{advertisesManagedBean.advID}"/>
+                        
+                        <h:outputLabel for="advname" value="Adv Name"/>
+                        <h:inputText value="#{advertisesManagedBean.advName}" required="true" requiredMessage="Adv Name can not be empty!"/>
+                        
+                        <h:outputLabel for="advview" value="Adv View"/>
+                        <h:inputText value="#{advertisesManagedBean.advView}"/>
+                        
+                        <h:outputLabel for="advlink" value="Adv Link"/>
+                        <h:inputText value="#{advertisesManagedBean.advLink}"/>
+                        
+                        <h:commandButton value="Update" type="submit" action="#{advertisesManagedBean.updateAdv()}"/>
+                        <h:commandButton value="Reset" type="reset"/>
+                        <h:message for="advname" style="color: red"/>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+
+            
+
+        </ui:composition>
+
+    </body>
+</html>
