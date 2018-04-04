@@ -33,6 +33,8 @@
         <h:outputStylesheet library="admin_res/css" name="style-responsive.css"/>
         <h:outputStylesheet library="admin_res/css" name="xcharts.min.css"/>
         <h:outputStylesheet library="admin_res/css" name="jquery-ui-1.10.4.min.css"/>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+        <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
         <title>Facelets Template</title>
     </h:head>
 
@@ -101,8 +103,8 @@
     <h:outputScript library="admin_res/js" name="calendar-custom.js"/>
     <h:outputScript library="admin_res/js" name="jquery.rateit.min.js"/>
     <!-- custom select -->
-    <h:outputScript library="js" name="jquery.customSelect.min.js"/>
-    <h:outputScript library="assets" name="chart-master/Chart.js"/>
+    <h:outputScript library="admin_res/js" name="jquery.customSelect.min.js"/>
+    <h:outputScript library="admin_res/assets" name="chart-master/Chart.js"/>
 
     <!--custome script for all page-->
     <h:outputScript library="admin_res/js" name="scripts.js"/>

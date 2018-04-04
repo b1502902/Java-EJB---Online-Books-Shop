@@ -90,6 +90,31 @@ public class Products implements Serializable {
     public Products() {
     }
 
+    
+    public Products(String productName, Integer productQuantity, BigDecimal productPrice, String productImg, String productTrailer, String productContent, Categories cateID, Producers producerID) {
+        this.productName = productName;
+        this.productQuantity = productQuantity;
+        this.productPrice = productPrice;
+        this.productImg = productImg;
+        this.productTrailer = productTrailer;
+        this.productContent = productContent;
+        this.cateID = cateID;
+        this.producerID = producerID;
+    }
+    public Products(String productName, Integer productQuantity, BigDecimal productPrice, Integer artistsID, String productImg, String productTrailer, String productContent, Categories cateID, Producers producerID) {
+        this.productName = productName;
+        this.productQuantity = productQuantity;
+        this.productPrice = productPrice;
+        this.artistsID = artistsID;
+        this.productImg = productImg;
+        this.productTrailer = productTrailer;
+        this.productContent = productContent;
+        this.cateID = cateID;
+        this.producerID = producerID;
+    }
+
+    
+    
     public Products(Integer productID) {
         this.productID = productID;
     }

@@ -5,17 +5,31 @@
  */
 package mbeanpack;
 
+import entitypack.Albums;
+import entitypack.Artists;
 import entitypack.Categories;
+import entitypack.Producers;
 import entitypack.Products;
+import entitypack.Users;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.servlet.http.Part;
+import sbeanpack.ArtistsFacadeLocal;
 import sbeanpack.CategoriesFacadeLocal;
+import sbeanpack.ProducersFacadeLocal;
 import sbeanpack.ProductsFacadeLocal;
 
 /**
@@ -25,12 +39,21 @@ import sbeanpack.ProductsFacadeLocal;
 @ManagedBean
 @RequestScoped
 public class ProductsManagedBean {
+
+    @EJB
+    private ArtistsFacadeLocal artistsFacade;
+
+    @EJB
+    private ProducersFacadeLocal producersFacade;
+    
     @EJB
     private CategoriesFacadeLocal categoriesFacade;
     
     @EJB
     private ProductsFacadeLocal productsFacade;
 
+    
+    
     private int productID;
     private String productName;
     private int productQuantity;
@@ -42,9 +65,14 @@ public class ProductsManagedBean {
     private String productImg;
     private String productTrailer;
     private String productContent;
+    
+    private Part file;
+    private String fileNamed;
     private String skeyword;
     private Products p;
 
+    
+    
     public ProductsManagedBean() {
     }
 
@@ -173,9 +201,55 @@ public class ProductsManagedBean {
     public void setSkeyword(String skeyword) {
         this.skeyword = skeyword;
     }
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
+    }
+
+    public String getFileNamed() {
+        return fileNamed;
+    }
+
+    public void setFileNamed(String fileNamed) {
+        this.fileNamed = fileNamed;
+    }
     /**
      * Creates a new instance of ProductsManagedBean
      */
+    
+    public void uploadFile() {
+            InputStream input = null;
+        try {
+            input = file.getInputStream();
+            System.out.println("chay qua inpustream");
+            String itemName = file.getSubmittedFileName();
+            String filename = itemName.substring(
+                    itemName.lastIndexOf("\\") + 1);
+            String dirPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/upload/images");
+            fileNamed = "/upload/images/"+filename;
+            File f = new File(dirPath + "\\" + filename);
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            FileOutputStream output = new FileOutputStream(f);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = input.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            //            resize(dirPath + "\\" + filename, dirPath + "\\" + filename, 200, 200);
+            input.close();
+            output.close();
+        } catch (IOException ex) {
+            System.out.println("loi io");
+            Logger.getLogger(ArtistsManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
     
     public List<Products> showAllProduct(){
         System.out.println(productsFacade.findAll());
@@ -236,5 +310,93 @@ public class ProductsManagedBean {
             name = name.substring(0, 25)+"...";
         }
         return name;
+    }
+
+    public String createProduct(){
+        uploadFile();
+        productImg = fileNamed;
+        Producers pcer = producersFacade.find(producerID);
+        Categories cate = categoriesFacade.find(cateID);
+        Products p = new Products(productName, productQuantity, productPrice, artistsID, productImg, productTrailer, productContent, cate, pcer);
+        productsFacade.create(p);
+        return "indexProduct.xhtml";
+    }
+    
+    public String linkEditProduct(int pID){
+        Products p1 = productsFacade.find(pID);
+        this.productID = p1.getProductID();
+        this.productName = p1.getProductName();
+        this.productQuantity = p1.getProductQuantity();
+        this.productPrice = p1.getProductPrice();
+        this.productContent = p1.getProductContent();
+        this.productTrailer = p1.getProductTrailer();
+        
+        if(p1.getCateID()!=null){
+            this.cateID = p1.getCateID().getCateID();
+        }
+        if(p1.getProducerID()!=null){
+            this.producerID = p1.getProducerID().getProducerID();
+        }
+        if(p1.getArtistsID()!=null){
+            this.artistsID = p1.getArtistsID();
+        }
+        
+        return "editProduct.xhtml";
+    }
+    
+    public String editProduct(){
+        System.out.println("file trong edit: "+file.getSubmittedFileName());
+        System.out.println("");
+        Products p1 = productsFacade.find(productID);
+        if(file.getSubmittedFileName()!=""){
+           uploadFile();
+           p1.setProductImg(fileNamed);
+        }
+        p1.setProductID(productID);
+        p1.setProductName(productName);
+        p1.setProductQuantity(productQuantity);
+        p1.setProductPrice(productPrice);
+        p1.setProductContent(productContent);
+        p1.setProductTrailer(productTrailer);
+        p1.setCateID(categoriesFacade.find(cateID));
+        p1.setProducerID(producersFacade.find(producerID));
+        p1.setArtistsID(artistsID);
+        productsFacade.edit(p1);
+        return "indexProduct.xhtml";
+    }
+    
+    public String deleteProduct(int pID){
+        Products a = productsFacade.find(pID);
+        productsFacade.remove(p);
+        return "indexProduct.xhtml";
+    }
+    public List<SelectItem> showCateToMenu(){
+        List<SelectItem> ls = new ArrayList<>();
+        List<Categories> lc = categoriesFacade.findAll();
+        for (Categories c : lc) {
+            ls.add(new SelectItem(c.getCateID(), c.getCateName()));
+        }
+        return ls;
+    }
+    
+    public List<SelectItem> showArtistsToMenu(){
+        List<SelectItem> ls = new ArrayList<>();
+        List<Artists> la = artistsFacade.findAll();
+        for (Artists a : la) {
+            ls.add(new SelectItem(a.getArtistID(), a.getArtistName()));
+        }
+        return ls;
+    }
+    public List<SelectItem> showProducersToMenu(){
+        List<SelectItem> ls = new ArrayList<>();
+        List<Producers> lpcer = producersFacade.findAll();
+        for (Producers p1 : lpcer) {
+            ls.add(new SelectItem(p1.getProducerID(), p1.getProducerName()));
+        }
+        return ls;
+    }
+    
+    public String getCateName(Categories cate){
+        return cate.getCateName();
     }
 }

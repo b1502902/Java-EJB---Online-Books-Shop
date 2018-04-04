@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../templates/admin/adindexTemplate.xhtml">
+
+            <ui:define name="content">
+                    <h:form enctype="multipart/form-data">
+                    
+                    <h:outputText value="Name: "/><br/>
+                    <h:inputText id="aName" value="#{productsManagedBean.productName}" required="true"/>
+                    <br/>
+                    <h:outputText value="Quantity"/>
+                    <br/>
+                    <p:inputText type="number" value="#{productsManagedBean.productQuantity}" validatorMessage="Minimum quantity is 0">
+                        <f:validateLongRange minimum="0"/>
+                    </p:inputText>
+                    <br/>
+                    <h:outputText value="Price"/>
+                    <br/>
+                    <p:inputText type="number" value="#{productsManagedBean.productPrice}" validatorMessage="Minimum price is 1">
+                        <f:validateLongRange minimum="1"/>
+                    </p:inputText>
+                    <br/>
+                    <h:outputText value="Category"/>
+                    <br/>
+                    <h:selectOneMenu id="lazy" value="#{productsManagedBean.cateID}" style="width:125px" required="true">
+                        <f:selectItems value="#{productsManagedBean.showCateToMenu()}"  />
+                    </h:selectOneMenu>
+                    <br/>
+                    <h:outputText value="Trailer link"/>
+                    <br/>
+                    <h:inputText value="#{productsManagedBean.productTrailer}"/>
+                    <br/>
+                    <h:outputText value="Content"/>
+                    <br/>
+                    <p:inputTextarea value="#{productsManagedBean.productContent}" rows="5" cols="30" counter="display" maxlength="4000" counterTemplate="{0} characters remaining." autoResize="false" />
+                    <br/><h:outputText id="display" />
+                    <br/>
+                    <h:outputText value="Artist"/>
+                    <br/>
+                    <h:selectOneMenu id="lazy" value="#{productsManagedBean.artistsID}" style="width:125px" required="true">
+                        <f:selectItems value="#{productsManagedBean.showArtistsToMenu()}"  />
+                    </h:selectOneMenu>
+                    <br/>
+                    <h:outputText value="Producer"/>
+                    <br/>
+                    <h:selectOneMenu id="lazy" value="#{productsManagedBean.producerID}" style="width:125px" required="true">
+                        <f:selectItems value="#{productsManagedBean.showProducersToMenu()}"  />
+                    </h:selectOneMenu>
+                    <br/>
+                    <h:outputText value="Image"/>
+                    <h:inputFile id="file" value="#{productsManagedBean.file}"/>
+                    <br/>
+                    <h:commandButton value="Edit" action="#{productsManagedBean.editProduct()}"/>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

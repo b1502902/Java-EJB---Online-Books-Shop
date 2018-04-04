@@ -45,6 +45,13 @@
                             <h:outputText value="#{alb.albumID}. #{alb.albumName}" />
                         </h:outputLink>
                     </p:column>
+                    <p:column headerText="List of your albums">
+                        <h:form>
+                            <p:commandLink styleClass="btn btn-default" value="Edit" action="#{albumsManagedBean.linkEditAlbum(alb.albumID)}"/>
+                            <p:commandLink styleClass="btn btn-warning" value="Delete" action="#{albumsManagedBean.deleteAlbum(alb.albumID)}"/>
+                        </h:form>
+                        
+                    </p:column>
                 </p:dataTable>
             </ui:define>
 

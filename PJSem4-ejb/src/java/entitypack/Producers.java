@@ -57,9 +57,17 @@ public class Producers implements Serializable {
     @OneToMany(mappedBy = "producerID")
     private Collection<Products> productsCollection;
 
+    
+
     public Producers() {
     }
 
+    public Producers(String producerName, String producerProfile, String producerImg) {
+        this.producerName = producerName;
+        this.producerProfile = producerProfile;
+        this.producerImg = producerImg;
+    }
+    
     public Producers(Integer producerID) {
         this.producerID = producerID;
     }

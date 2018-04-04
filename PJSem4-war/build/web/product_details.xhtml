@@ -74,7 +74,28 @@
 
                                 <hr class="soft clr"/>
                                 <p>
-                                    nội dung nhỏ trong này
+                                    <b>Category: </b>
+                                    <c:if test="${!empty p.cateID}">
+                                        #{categoriesManagedBean.getCateNameById(p.cateID.cateID)}
+                                    </c:if>
+                                    <c:if test="${empty p.cateID}">
+                                        unknown
+                                    </c:if>
+                                    <br/><b>Artist: </b>
+                                    <c:if test="${!empty p.artistsID}">
+                                        #{artistsManagedBean.getArtistNameById(p.artistsID)}
+                                    </c:if>
+                                    <c:if test="${empty p.artistsID}">
+                                        unknown
+                                    </c:if>
+                                    <br/><b>Producer: </b>
+                                    <c:if test="${!empty p.producerID}">
+                                        #{producersManagedBean.getProducerNameById(p.producerID.producerID)}
+                                    </c:if>
+                                    <c:if test="${empty p.producerID}">
+                                        unknown
+                                    </c:if>
+                                    
                                 </p>
                                 <a class="btn btn-small pull-right" href="#detail">More Details</a>
                                 <br class="clr"/>

@@ -6,7 +6,12 @@
 package mbeanpack;
 
 import entitypack.Artists;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -26,20 +31,70 @@ public class ArtistsManagedBean {
     @EJB
     private ArtistsFacadeLocal artistsFacade;
 
+    
     private int artistID;
     private String artistName;
     private String artistProfile;
     private String artistImg;
     
-    private Part imgFile;
-    private String imgFileName;
-    private long imgFileSize;
+    Part file;
+    String fileNamed;
+    public ArtistsManagedBean() {
+    }
+    public String getFileNamed() {
+        return fileNamed;
+    }
+
+    public void setFileNamed(String fileNamed) {
+        this.fileNamed = fileNamed;
+    }
+
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
+    }
+
+    /**
+     * Creates a new instance of Upload_File
+     */
     
+
+    public void uploadFile() {
+        
+            InputStream input = null;
+        try {
+            input = file.getInputStream();
+            System.out.println("chay qua inpustream");
+            String itemName = file.getSubmittedFileName();
+            String filename = itemName.substring(
+                    itemName.lastIndexOf("\\") + 1);
+            String dirPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/upload/images");
+            fileNamed = "/upload/images/"+filename;
+            File f = new File(dirPath + "\\" + filename);
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            FileOutputStream output = new FileOutputStream(f);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = input.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            //            resize(dirPath + "\\" + filename, dirPath + "\\" + filename, 200, 200);
+            input.close();
+            output.close();
+        } catch (IOException ex) {
+            System.out.println("loi io");
+            Logger.getLogger(ArtistsManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     /**
      * Creates a new instance of ArtistsManagedBean
      */
-    public ArtistsManagedBean() {
-    }
     
 
     public int getArtistID() {
@@ -58,6 +113,14 @@ public class ArtistsManagedBean {
         this.artistName = artistName;
     }
 
+    public String getArtistProfile() {
+        return artistProfile;
+    }
+
+    public void setArtistProfile(String artistProfile) {
+        this.artistProfile = artistProfile;
+    }
+
     public String getArtistImg() {
         return artistImg;
     }
@@ -65,53 +128,48 @@ public class ArtistsManagedBean {
     public void setArtistImg(String artistImg) {
         this.artistImg = artistImg;
     }
-
-    public Part getImgFile() {
-        return imgFile;
-    }
-
-    public void setImgFile(Part imgFile) {
-        this.imgFile = imgFile;
-    }
-
-    public String getImgFileName() {
-        return imgFileName;
-    }
-
-    public void setImgFileName(String imgFileName) {
-        this.imgFileName = imgFileName;
-    }
-
-    public long getImgFileSize() {
-        return imgFileSize;
-    }
-
-    public void setImgFileSize(long imgFileSize) {
-        this.imgFileSize = imgFileSize;
-    }
+    
     public String createArtist(){
-        System.out.println("vao createArt: "+artistName);
-        System.out.println("nhan file: "+imgFile);
-        try{
-            imgFileName = imgFile.getSubmittedFileName();
-            imgFileSize = imgFile.getSize();
-            String dirPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/upload");
-            imgFile.write(dirPath+"/"+imgFileName);
-            System.out.println("link hinh: "+dirPath+"/"+imgFileName);
-            Artists a = new Artists(artistName, artistProfile, dirPath+"/"+imgFileName);
-            artistsFacade.create(a);
-        } catch (IOException ex){
-            Logger.getLogger(ArtistsManagedBean.class.getName());
+        uploadFile();
+        artistImg = fileNamed;
+        Artists a = new Artists(artistName, artistProfile, artistImg);
+        artistsFacade.create(a);
+        return "indexArtist.xhtml";
+    }
+    
+    public String linkEditArtist(int artID){
+        Artists a = artistsFacade.find(artID);
+        this.artistID = a.getArtistID();
+        this.artistName = a.getArtistName();
+        this.artistProfile = a.getArtistProfile();
+        this.artistImg = a.getArtistImg();
+        return "editArtist.xhtml";
+    }
+    
+    public String editArtist(){
+        System.out.println("file trong edit: "+file.getSubmittedFileName());
+        System.out.println("");
+        Artists a = artistsFacade.find(artistID);
+        if(file.getSubmittedFileName()!=""){
+           uploadFile();
+           a.setArtistImg(fileNamed);
         }
-        
-        return "index.xhtml";
+        a.setArtistName(artistName);
+        a.setArtistProfile(artistProfile);
+        artistsFacade.edit(a);
+        return "indexArtist.xhtml";
     }
-
-    public String getArtistProfile() {
-        return artistProfile;
+    
+    public String deleteArtist(int artID){
+        Artists a = artistsFacade.find(artID);
+        artistsFacade.remove(a);
+        return "indexArtist.xhtml";
     }
-
-    public void setArtistProfile(String artistProfile) {
-        this.artistProfile = artistProfile;
+    public List<Artists> showAllArtists(){
+        return artistsFacade.findAll();
+    }
+    
+    public String getArtistNameById(int artistID){
+        return artistsFacade.find(artistID).getArtistName();
     }
 }

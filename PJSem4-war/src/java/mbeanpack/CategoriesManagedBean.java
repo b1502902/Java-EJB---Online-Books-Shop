@@ -62,7 +62,7 @@ public class CategoriesManagedBean {
      public String createCate(){
         Categories c = new Categories(cateName);
         categoriesFacade.create(c);
-        return "index.xhtml";
+        return "indexCate.xhtml";
     }
     
     
@@ -70,7 +70,7 @@ public class CategoriesManagedBean {
         Categories c = categoriesFacade.find(cateid);
         this.cateID = c.getCateID();
         this.cateName = c.getCateName();
-        return "edit.xhtml";
+        return "editCate.xhtml";
     }
     
     public String editCate(){
@@ -78,12 +78,16 @@ public class CategoriesManagedBean {
         Categories c = categoriesFacade.find(cateID);
         c.setCateName(cateName);
         categoriesFacade.edit(c);
-        return "index.xhtml";
+        return "indexCate.xhtml";
     }
     
     public String deleteCate(int cateid){
         Categories c = categoriesFacade.find(cateid);
         categoriesFacade.remove(c);
-        return "index.xhtml";
+        return "indexCate.xhtml";
+    }
+    
+    public String getCateNameById(int cateID){
+        return categoriesFacade.find(cateID).getCateName();
     }
 }

@@ -38,10 +38,11 @@
                     </p:column>
                     
                     <p:column headerText="">
-                        <h:outputLink value="order.xhtml?odid=#{od.orderID}">View Detail</h:outputLink>
                         <h:form id="ordereditFrm">
+                        <h:outputLink class="btn btn-default" value="order.xhtml?odid=#{od.orderID}">Detail</h:outputLink>
+                        
                             <p:growl id="growl" life="3000" />
-                            <p:commandButton styleClass="btn btn-warning" value="Cancel" id="nonAjax" update="growl" ajax="false" action="#{ordersManagedBean.cancelOrder(od.orderID)}"/>
+                            <p:commandLink styleClass="btn btn-warning" value="Cancel" id="nonAjax" update="growl" ajax="false" action="#{ordersManagedBean.cancelOrder(od.orderID)}"/>
                         </h:form>
                     </p:column>
                 </p:dataTable>

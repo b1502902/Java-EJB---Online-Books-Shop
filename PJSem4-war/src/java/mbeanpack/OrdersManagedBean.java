@@ -211,16 +211,22 @@ public class OrdersManagedBean {
     
     public String cancelOrder(int odid){
         System.out.println(odid);
+        
         Orders od = ordersFacade.find(odid);
-        od.setOrderStatus("cancel");
-        ordersFacade.edit(od);
-        List<OrdersDetail> listitem = ordersDetailFacade.listOrdersDetailByOrderID(od);
-        for (OrdersDetail ci : listitem) {
-            Products p = productsFacade.find(ci.getProductID().getProductID());
-            p.setProductQuantity(p.getProductQuantity() + ci.getQuantity());
-            productsFacade.edit(p);
+        if(od.getOrderStatus().equals("waiting")||od.getOrderStatus().equals("cancel")){
+            od.setOrderStatus("cancel");
+            ordersFacade.edit(od);
+            List<OrdersDetail> listitem = ordersDetailFacade.listOrdersDetailByOrderID(od);
+            for (OrdersDetail ci : listitem) {
+                Products p = productsFacade.find(ci.getProductID().getProductID());
+                p.setProductQuantity(p.getProductQuantity() + ci.getQuantity());
+                productsFacade.edit(p);
+            }
+            addMessage("Order has been cancel!");
+        } else{
+            addMessage("This Order can't cancel!");
         }
-        addMessage("Order has been cancel!");
+        
         return "userorders.xhtml";
     }
     

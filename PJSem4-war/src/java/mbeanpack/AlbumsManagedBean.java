@@ -159,4 +159,42 @@ public class AlbumsManagedBean {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+    
+    public String linkEditAlbum(int albID){
+        Albums a = albumsFacade.find(albID);
+        this.albumID = a.getAlbumID();
+        this.albumName = a.getAlbumName();
+        return "editAlbum.xhtml";
+    }
+    
+    public String editAlbum(){
+        Albums a = albumsFacade.find(albumID);
+        a.setAlbumName(albumName);
+        albumsFacade.edit(a);
+        return "useralbums.xhtml";
+    }
+    
+    public String deleteAlbum(int albID){
+        List<AlbumProduct> lap = albumProductFacade.findAll();
+        for (AlbumProduct ap : lap) {
+            Albums a = ap.getAlbumID();
+            if (a.getAlbumID() == albID) {
+                albumProductFacade.remove(ap);
+            }
+        }
+        Albums a2 = albumsFacade.find(albID);
+        albumsFacade.remove(a2);
+        return "useralbums.xhtml";
+    }
+    public String deleteProductinAlbum(int albID, int pID){
+        List<AlbumProduct> lap = albumProductFacade.findAll();
+        for (AlbumProduct ap : lap) {
+            Albums a = ap.getAlbumID();
+            Products p = ap.getProductID();
+            if(a.getAlbumID() == albID && p.getProductID() == pID){
+                albumProductFacade.remove(ap);
+            }
+        }
+        return "album.xhtml?albid="+albID;
+    }
 }
